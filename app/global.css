@@ -1,0 +1,17 @@
+:root {
+  --background: rgb(22, 22, 22);
+  --border: rgb(82, 80, 79);
+  --text: rgb(255, 255, 255);
+  --blue: rgb(1, 180, 228);
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  min-height: calc(100vh - 151px);
+}
