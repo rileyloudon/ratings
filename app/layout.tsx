@@ -34,7 +34,7 @@ export default function RootLayout({
         style={{ backgroundColor: 'var(--background)' }}
       >
         <Header />
-        {children}
+        <div style={{ minHeight: 'calc(100vh - 151px)' }}>{children}</div>
         <Footer />
       </body>
     </html>
