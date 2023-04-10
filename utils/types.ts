@@ -118,6 +118,15 @@ export interface DetailedMovie extends Movie {
   };
 }
 
+export interface Collection {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  parts: Movie[];
+}
+
 // Actor Types
 export interface Person {
   profile_path: string | null;
