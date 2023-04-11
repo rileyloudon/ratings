@@ -1,0 +1,47 @@
+.popular {
+  position: relative;
+  top: 20%;
+  transform: translateY(-20%);
+}
+
+.posters {
+  padding: 0 24px;
+  display: flex;
+  overflow: scroll;
+}
+
+.item {
+  margin: 5px;
+}
+
+.item img {
+  width: 250px;
+}
+
+.popular p {
+  padding-bottom: 8px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.error {
+  text-align: center;
+  color: var(--text);
+}
+
+@media (max-width: 735px) {
+  .popular {
+    top: 10%;
+    transform: translateY(-10%);
+  }
+
+  .item img {
+    width: 200px;
+  }
+}
+
+@media (max-width: 375px) {
+  .item img {
+    width: 150px;
+  }
+}
