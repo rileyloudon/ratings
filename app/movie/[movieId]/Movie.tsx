@@ -1,10 +1,13 @@
-import { DetailedMovie } from '../../../utils/types';
+import { DetailedMovie, ApiError } from '../../../utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
 import Image from 'next/image';
 import styles from './Movie.module.css';
 
-const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
+const Movie = ({ movieData }: { movieData: DetailedMovie | ApiError }) => {
+  if ('status_message' in movieData)
+    return <p className={styles.error}>{movieData.status_message}</p>;
+
   const renderWatchProviders = (): string => {
     if (movieData && 'watch/providers' in movieData) {
       const countryCode = Intl.DateTimeFormat()

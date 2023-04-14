@@ -1,7 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Collection, DetailedMovie, Movie } from '../../../utils/types';
+import {
+  Collection,
+  DetailedMovie,
+  Movie,
+  ApiError,
+} from '../../../utils/types';
 import LineGraph from '../../../components/LineGraph/LineGraph';
 import styles from './Graphs.module.css';
 
@@ -9,8 +14,8 @@ const Graphs = ({
   collectionData,
   movieData,
 }: {
-  collectionData: Collection;
-  movieData: DetailedMovie;
+  collectionData: Collection | undefined | ApiError;
+  movieData: DetailedMovie | ApiError;
 }) => {
   const moviesToDisplay = window.innerWidth > 400 ? 10 : 5;
 
@@ -62,6 +67,12 @@ const Graphs = ({
       );
     }
   };
+
+  if (collectionData && 'status_message' in collectionData)
+    return <p className={styles.error}>{collectionData.status_message}</p>;
+
+  if ('status_message' in movieData)
+    return <p className={styles.error}>{movieData.status_message}</p>;
 
   return (
     <div className={styles.collection}>
