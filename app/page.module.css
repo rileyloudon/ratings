@@ -1,0 +1,10 @@
+.container {
+  text-align: center;
+  height: calc(100vh - 151px);
+}
+
+.instructions {
+  color: var(--text);
+  font-size: 18px;
+  margin-top: 0;
+}
