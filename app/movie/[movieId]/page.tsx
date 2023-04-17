@@ -6,7 +6,7 @@ import {
 } from '../../../utils/types';
 import Movie from './Movie';
 import Graphs from './Graphs';
-import styles from './Movie.module.css';
+import styles from './page.module.css';
 
 type MovieData = DetailedMovie | ApiError;
 type CollectionData = Collection | ApiError;
@@ -14,7 +14,7 @@ type CollectionData = Collection | ApiError;
 const GetMovie = async ({ params }: { params: { movieId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
 
-  if (!params.movieId) return <p className={styles.error}>No MovieId Found</p>;
+  if (!params.movieId) return <p className={styles.error}>No Movie Id Found</p>;
 
   let movieData;
   let collectionData;
@@ -48,6 +48,12 @@ const GetMovie = async ({ params }: { params: { movieId: string } }) => {
   }
 
   if (error) return <p className={styles.error}>{error.message}</p>;
+
+  if (movieData && 'status_message' in movieData)
+    return <p className={styles.error}>{movieData.status_message}</p>;
+
+  if (collectionData && 'status_message' in collectionData)
+    return <p className={styles.error}>{collectionData.status_message}</p>;
 
   return (
     movieData && (

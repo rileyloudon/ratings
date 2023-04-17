@@ -4,10 +4,7 @@ import CastCard from '@/components/CastCard/CastCard';
 import Image from 'next/image';
 import styles from './Movie.module.css';
 
-const Movie = ({ movieData }: { movieData: DetailedMovie | ApiError }) => {
-  if ('status_message' in movieData)
-    return <p className={styles.error}>{movieData.status_message}</p>;
-
+const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
   const renderWatchProviders = (): string => {
     if (movieData && 'watch/providers' in movieData) {
       const countryCode = Intl.DateTimeFormat()
