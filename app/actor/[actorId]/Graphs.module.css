@@ -1,0 +1,26 @@
+.credits p {
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.nav {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.nav button {
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: transparent;
+  margin: 0;
+  margin-left: 5px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.nav button:disabled {
+  opacity: 33%;
+  cursor: not-allowed;
+}
