@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Collection, DetailedMovie, Movie } from '../../../utils/types';
-import LineGraph from '../../../components/LineGraph/LineGraph';
+import { Collection, DetailedMovie, Movie } from '@/utils/types';
+import LineGraph from '@/components/LineGraph/LineGraph';
 import styles from './Graphs.module.css';
 
 const Graphs = ({

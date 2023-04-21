@@ -1,5 +1,5 @@
-import Header from '@/Components/Header/Header';
-import Footer from '@/Components/Footer/Footer';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 import { Lato } from 'next/font/google';
 import './global.css';
 

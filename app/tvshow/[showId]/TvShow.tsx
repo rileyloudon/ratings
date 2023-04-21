@@ -1,4 +1,4 @@
-import { DetailedTv, ApiError } from '../../../utils/types';
+import { DetailedTv, ApiError } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
 import Image from 'next/image';

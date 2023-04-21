@@ -4,7 +4,7 @@ import {
   SearchResultTv,
   SearchResultMovie,
   SearchResultPerson,
-} from '../utils/types';
+} from '@/utils/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Popular.module.css';

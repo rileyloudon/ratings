@@ -1,4 +1,4 @@
-import { DetailedMovie, ApiError } from '../../../utils/types';
+import { DetailedMovie } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
 import Image from 'next/image';

@@ -3,7 +3,7 @@ import {
   ApiError,
   Movie as MovieType,
   Collection,
-} from '../../../utils/types';
+} from '@/utils/types';
 import Movie from './Movie';
 import Graphs from './Graphs';
 import styles from './page.module.css';

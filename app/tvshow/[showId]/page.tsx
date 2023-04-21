@@ -1,4 +1,4 @@
-import { DetailedTv, Season, ApiError } from '../../../utils/types';
+import { DetailedTv, Season, ApiError } from '@/utils/types';
 import Graphs from './Graphs';
 import TvShow from './TvShow';
 import styles from './page.module.css';
