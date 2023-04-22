@@ -1,0 +1,5 @@
+.error,
+.no-results {
+  color: var(--text);
+  text-align: center;
+}
