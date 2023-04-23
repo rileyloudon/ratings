@@ -1,0 +1,119 @@
+.header {
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  max-width: 1000px;
+  padding-top: 8px;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.poster {
+  width: 300px;
+  align-self: flex-start;
+}
+
+.text {
+  height: max-content;
+
+  padding: 0 16px;
+}
+
+.hidden-bio {
+  max-height: 450px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hidden-bio::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: linear-gradient(transparent, var(--background));
+  width: 100%;
+  height: 10em;
+}
+
+.long-bio {
+  overflow: initial;
+}
+
+.name {
+  margin: 0;
+}
+
+.name,
+.info,
+.bio {
+  color: var(--text);
+}
+
+.info span:first-of-type:before {
+  content: '';
+  padding: 0px;
+}
+
+.info span::before {
+  content: '\25E6';
+  padding: 8px;
+}
+
+.bio {
+  white-space: pre-line;
+  margin-bottom: 0;
+}
+
+.bio p {
+  margin-bottom: 0;
+}
+
+.header button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  border: none;
+  padding: 6px 12px;
+  font-size: 16px;
+  background-color: transparent;
+  margin: 0;
+  cursor: pointer;
+  color: var(--blue);
+}
+
+.loading {
+  text-align: center;
+}
+
+.loading p {
+  color: var(--text);
+}
+
+@media (max-width: 735px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .poster {
+    align-self: center;
+  }
+
+  .name {
+    margin-top: 8px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info span:first-of-type:before {
+    content: '\25E6';
+    padding: 8px;
+  }
+}
