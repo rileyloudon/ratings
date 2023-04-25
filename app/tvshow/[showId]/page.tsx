@@ -58,28 +58,36 @@ const GetTvShow = async ({ params }: { params: { showId: string } }) => {
       }
     }
 
-    const promises = [];
-    for (let i = 0; i < appendStringArray.length; i += 1) {
-      promises.push(
-        fetch(
-          `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&append_to_response=${appendStringArray[i]}`
-        )
-      );
+    try {
+      const promises = [];
+      for (let i = 0; i < appendStringArray.length; i += 1) {
+        promises.push(
+          fetch(
+            `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&append_to_response=${appendStringArray[i]}`
+          )
+        );
+      }
+
+      const res = await Promise.all(promises);
+      const data = (await Promise.all(
+        res.map((r) => r.json())
+      )) as SeasonData[];
+
+      const combinedData = Object.assign({}, ...data) as SeasonData;
+
+      if ('status_message' in combinedData)
+        return (
+          <p className={styles.error}>
+            {combinedData.status_message.toString()}
+          </p>
+        );
+
+      Object.keys(combinedData).forEach((key) => {
+        if (key.includes('season/')) allSeasons[key] = combinedData[key];
+      });
+    } catch (e) {
+      error = e as Error;
     }
-
-    const res = await Promise.all(promises);
-    const data = (await Promise.all(res.map((r) => r.json()))) as SeasonData[];
-
-    const combinedData = Object.assign({}, ...data) as SeasonData;
-
-    if ('status_message' in combinedData)
-      return (
-        <p className={styles.error}>{combinedData.status_message.toString()}</p>
-      );
-
-    Object.keys(combinedData).forEach((key) => {
-      if (key.includes('season/')) allSeasons[key] = combinedData[key];
-    });
   }
 
   return (
