@@ -1,13 +1,10 @@
-import { DetailedTv, ApiError } from '@/utils/types';
+import { DetailedTv } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
 import Image from 'next/image';
 import styles from './TvShow.module.css';
 
-const TvShow = ({ tvData }: { tvData: DetailedTv | ApiError }) => {
-  if ('status_message' in tvData)
-    return <p className={styles.error}>{tvData.status_message}</p>;
-
+const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
   const renderWatchProviders = (): string => {
     const countryCode = Intl.DateTimeFormat()
       .resolvedOptions()
