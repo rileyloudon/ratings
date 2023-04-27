@@ -19,8 +19,7 @@
   cursor: not-allowed;
 }
 
-.collection p,
-.error {
+.collection p {
   color: var(--text);
   text-align: center;
 }

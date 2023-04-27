@@ -80,11 +80,6 @@
   color: var(--text);
 }
 
-.error {
-  color: var(--text);
-  text-align: center;
-}
-
 @media (max-width: 735px) {
   .header {
     flex-direction: column;
