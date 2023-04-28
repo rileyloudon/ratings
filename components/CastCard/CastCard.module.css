@@ -1,0 +1,52 @@
+.castCards {
+  user-select: none;
+  display: flex;
+  position: relative;
+  align-items: center;
+  overflow: scroll;
+  margin: 16px;
+}
+
+.castCards img {
+  width: 125px;
+  height: 100%;
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
+}
+
+.card {
+  min-width: 125px;
+  max-width: 125px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-right: 8px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.card p {
+  color: var(--text);
+  padding: 0 8px;
+}
+
+.card .name {
+  margin: 0;
+}
+
+.card .character {
+  font-size: 14px;
+  color: #a7a7a7;
+}
+
+@media (max-width: 735px) {
+  .castCards img {
+    width: 100px;
+  }
+
+  .card {
+    min-width: 100px;
+    max-width: 100px;
+  }
+}
