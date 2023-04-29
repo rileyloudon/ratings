@@ -1,0 +1,40 @@
+.footer {
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.footer .svg {
+  position: relative;
+  width: 100px;
+  height: 12px;
+  padding: 0 6px;
+}
+
+.footer .disclaimer {
+  text-align: center;
+  padding-right: 6px;
+  margin-bottom: 0;
+}
+
+.footer .from {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 735px) {
+  .footer {
+    font-size: 14px;
+  }
+
+  .footer .svg {
+    width: 80px;
+    height: 10px;
+  }
+}
