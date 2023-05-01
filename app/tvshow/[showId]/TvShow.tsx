@@ -29,7 +29,7 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
             className={styles.poster}
             src={`https://image.tmdb.org/t/p/w500/${tvData.poster_path}`}
             alt=''
-            width={500}
+            width={300}
             height={450}
           />
         )}
@@ -50,7 +50,7 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
                 src={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
                 alt=''
                 width={1280}
-                height={500}
+                height={720}
               />
               <h2 className={styles.title}>
                 {tvData.name}

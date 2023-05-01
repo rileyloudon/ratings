@@ -37,7 +37,7 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
             className={styles.poster}
             src={`https://image.tmdb.org/t/p/w500/${actorData.profile_path}`}
             alt=''
-            width={500}
+            width={300}
             height={450}
           />
         ) : (

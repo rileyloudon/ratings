@@ -35,7 +35,7 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
             className={styles.poster}
             src={`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`}
             alt=''
-            width={500}
+            width={300}
             height={450}
           />
         )}
@@ -56,7 +56,7 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
                 src={`https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}`}
                 alt=''
                 width={1280}
-                height={500}
+                height={720}
               />
               <h2 className={styles.title}>
                 {movieData.title}

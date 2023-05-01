@@ -49,7 +49,7 @@ const SearchResults = ({
                     src={`https://image.tmdb.org/t/p/w300/${imgPath}`}
                     alt={`${name} Poster`}
                     width={300}
-                    height={250}
+                    height={450}
                   />
                 ) : (
                   <NoPoster />
