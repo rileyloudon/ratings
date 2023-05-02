@@ -1,0 +1,37 @@
+.container {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  box-sizing: border-box;
+}
+
+.container form {
+  margin: auto;
+}
+
+.title {
+  margin: 0;
+  position: absolute;
+}
+
+.title a {
+  margin-right: auto;
+  color: var(--text);
+  text-decoration: none;
+}
+
+@media (max-width: 735px) {
+  .container {
+    margin-right: 8px;
+  }
+
+  .title {
+    position: initial;
+    padding-right: 16px;
+  }
+
+  .container form input {
+    width: 100%;
+  }
+}
