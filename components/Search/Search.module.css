@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.form input {
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 16px;
+  margin: 0;
+  background-color: transparent;
+  color: var(--text);
+}
+
+.form input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+.form button {
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: transparent;
+  margin: 0;
+  margin-left: 5px;
+  cursor: pointer;
+  color: var(--text);
+}
