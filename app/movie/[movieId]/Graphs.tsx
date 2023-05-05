@@ -12,9 +12,12 @@ const Graphs = ({
   collectionData: Collection | undefined;
   movieData: DetailedMovie;
 }) => {
-  const moviesToDisplay = window.innerWidth > 400 ? 10 : 5;
-
+  const [moviesToDisplay, setMoviesToDisplay] = useState<number>(10);
   const [displayedData, setDisplayedData] = useState<Movie[]>();
+
+  useEffect(() => {
+    window.innerWidth > 400 ? setMoviesToDisplay(10) : setMoviesToDisplay(5);
+  }, []);
 
   useEffect(() => {
     if (collectionData && !('status_message' in collectionData))

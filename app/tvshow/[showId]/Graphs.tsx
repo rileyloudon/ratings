@@ -11,14 +11,16 @@ interface GraphsProps {
 }
 
 const Graphs = ({ tvData, seasonData }: GraphsProps) => {
-  const episodesToDisplay =
+  const [episodesToDisplay, setEpisodesToDisplay] = useState<number>(10);
+  const [seasonSelector, setSeasonSelector] = useState<string>('season/1');
+  const [displayedData, setDisplayedData] = useState<Episode[]>();
+
+  useEffect(() => {
     window.innerWidth < 400 &&
     tvData.number_of_episodes / tvData.number_of_seasons > 100
       ? 5
       : 10;
-
-  const [seasonSelector, setSeasonSelector] = useState<string>('season/1');
-  const [displayedData, setDisplayedData] = useState<Episode[]>();
+  }, [tvData]);
 
   useEffect(() => {
     if (

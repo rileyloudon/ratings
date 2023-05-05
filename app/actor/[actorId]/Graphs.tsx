@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Movie, TvShow } from '@/utils/types';
 import LineGraph from '@/components/LineGraph/LineGraph';
 import styles from './Graphs.module.css';
@@ -10,11 +10,14 @@ interface GraphsProps {
 }
 
 const Graphs = ({ credits }: GraphsProps) => {
-  const creditsToDisplay = window.innerWidth > 400 ? 10 : 5;
-
+  const [creditsToDisplay, setCreditsToDisplay] = useState<number>(10);
   const [displayedData, setDisplayedData] = useState<(Movie | TvShow)[]>(
     credits.slice(0, creditsToDisplay)
   );
+
+  useEffect(() => {
+    window.innerWidth > 400 ? setCreditsToDisplay(10) : setCreditsToDisplay(5);
+  }, []);
 
   const handlePrevClick = () => {
     const endingValue = credits.findIndex(
