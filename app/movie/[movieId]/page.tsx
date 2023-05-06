@@ -36,10 +36,11 @@ const GetMovie = async ({ params }: { params: { movieId: string } }) => {
       const tempCollection =
         (await collectionResponse.json()) as CollectionData;
       if ('parts' in tempCollection) {
-        const now = Date.now();
+        // filtered date is 3 months from now. today + months * milliseconds
+        const filterDate = Date.now() + 3 * 2628000000;
         const sortedParts: MovieType[] = tempCollection.parts
           .sort((a, b) => a.release_date.localeCompare(b.release_date))
-          .filter((a) => new Date(a.release_date).getTime() < now);
+          .filter((a) => new Date(a.release_date).getTime() < filterDate);
         collectionData = { ...tempCollection, parts: sortedParts };
       } else collectionData = tempCollection;
     }
