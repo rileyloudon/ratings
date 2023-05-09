@@ -16,11 +16,15 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
       setTextHeight(ref.current?.offsetHeight);
   };
 
-  const resizeObserver = new ResizeObserver(handleElementResize);
+  const resizeObserver =
+    typeof window !== 'undefined' && new ResizeObserver(handleElementResize);
 
   useLayoutEffect(() => {
-    if (ref.current) resizeObserver.observe(ref.current);
-    return () => resizeObserver.disconnect();
+    if (ref.current && resizeObserver) resizeObserver.observe(ref.current);
+
+    return () => {
+      if (resizeObserver) resizeObserver.disconnect();
+    };
   });
 
   const getAge = (actorBirthday: string) => {
