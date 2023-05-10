@@ -17,8 +17,6 @@
 
 .text {
   height: max-content;
-
-  padding: 0 16px;
 }
 
 .hidden-bio {
@@ -41,6 +39,7 @@
 
 .long-bio {
   overflow: initial;
+  min-width: calc(100% - 300px);
 }
 
 .name {
@@ -51,6 +50,7 @@
 .info,
 .bio {
   color: var(--text);
+  margin: 0 16px;
 }
 
 .info span:first-of-type:before {
