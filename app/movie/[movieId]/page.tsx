@@ -11,7 +11,7 @@ import styles from './page.module.css';
 type MovieData = DetailedMovie | ApiError;
 type CollectionData = Collection | ApiError;
 
-const GetMovie = async ({ params }: { params: { movieId: string } }) => {
+const Page = async ({ params }: { params: { movieId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
 
   if (!params.movieId) return <p className={styles.error}>No Movie Id Found</p>;
@@ -58,12 +58,12 @@ const GetMovie = async ({ params }: { params: { movieId: string } }) => {
 
   return (
     movieData && (
-      <>
+      <div className={styles.movie}>
         <Movie movieData={movieData} />
         <Graphs collectionData={collectionData} movieData={movieData} />
-      </>
+      </div>
     )
   );
 };
 
-export default GetMovie;
+export default Page;

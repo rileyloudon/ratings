@@ -5,7 +5,7 @@ import styles from './page.module.css';
 
 type ActorData = DetailedPerson | ApiError;
 
-const GetActor = async ({ params }: { params: { actorId: string } }) => {
+const Page = async ({ params }: { params: { actorId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
 
   if (!params.actorId) return <p className={styles.error}>No Actor Id Found</p>;
@@ -45,15 +45,15 @@ const GetActor = async ({ params }: { params: { actorId: string } }) => {
 
   return (
     actorData && (
-      <>
+      <div className={styles.actor}>
         <Actor actorData={actorData} />
         {'combined_credits' in actorData &&
           actorData.combined_credits.cast.length && (
             <Graphs credits={actorData.combined_credits.cast} />
           )}
-      </>
+      </div>
     )
   );
 };
 
-export default GetActor;
+export default Page;

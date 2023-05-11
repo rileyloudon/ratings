@@ -6,7 +6,7 @@ import styles from './page.module.css';
 type TvData = DetailedTv | ApiError;
 type SeasonData = Season | ApiError;
 
-const GetTvShow = async ({ params }: { params: { showId: string } }) => {
+const Page = async ({ params }: { params: { showId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
 
   if (!params.showId)
@@ -92,12 +92,12 @@ const GetTvShow = async ({ params }: { params: { showId: string } }) => {
 
   return (
     tvData && (
-      <>
+      <div className={styles.tv}>
         <TvShow tvData={tvData} />
         {<Graphs tvData={tvData} seasonData={allSeasons} />}
-      </>
+      </div>
     )
   );
 };
 
-export default GetTvShow;
+export default Page;

@@ -1,3 +1,8 @@
+.actor {
+  margin: auto;
+  max-width: 1000px;
+}
+
 .error {
   color: var(--text);
   text-align: center;
