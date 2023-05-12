@@ -59,7 +59,10 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
             <h2 className={styles.name}>{actorData.name}</h2>
             <div className={styles.info}>
               {getAge(actorData.birthday)}
-              <span>{actorData.combined_credits.cast.length} Credits</span>
+              <span>
+                {actorData.combined_credits.cast.length} Credit
+                {actorData.combined_credits.cast.length === 1 ? '' : 's'}
+              </span>
             </div>
             <p className={styles.bio}>{actorData.biography}</p>
           </div>
