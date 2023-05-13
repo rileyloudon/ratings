@@ -20,6 +20,10 @@
   color: var(--text);
 }
 
+.nav button:first-of-type {
+  margin-left: 0;
+}
+
 .nav button:disabled {
   opacity: 33%;
   cursor: not-allowed;
