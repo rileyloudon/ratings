@@ -11,7 +11,7 @@ interface GraphsProps {
 }
 
 const Graphs = ({ tvData, seasonData }: GraphsProps) => {
-  const [episodesToDisplay, setEpisodesToDisplay] = useState<number>(10);
+  const [episodesToDisplay] = useState<number>(10);
   const [seasonSelector, setSeasonSelector] = useState<string>('season/1');
   const [displayedData, setDisplayedData] = useState<Episode[]>();
 
@@ -56,6 +56,8 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
   };
 
   const handleNextClick = () => {
+    console.log(displayedData);
+
     if (seasonData && !('status_message' in seasonData) && displayedData) {
       const { episodes } = seasonData[seasonSelector];
 
@@ -88,6 +90,13 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
           </option>
         ))}
       </select>
+      {displayedData && (
+        <LineGraph
+          data={displayedData}
+          xAxisDataKey='episode_number'
+          xAxisLabel='Episode'
+        />
+      )}
       {seasonData &&
         seasonData[seasonSelector].episodes.length > episodesToDisplay && (
           <div className={styles.nav}>
@@ -100,7 +109,7 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
               type='button'
               onClick={handlePrevClick}
             >
-              Previous {episodesToDisplay}
+              Previous
             </button>
             <button
               disabled={
@@ -113,17 +122,10 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
               type='button'
               onClick={handleNextClick}
             >
-              Next {episodesToDisplay}
+              Next
             </button>
           </div>
         )}
-      {displayedData && (
-        <LineGraph
-          data={displayedData}
-          xAxisDataKey='episode_number'
-          xAxisLabel='Episode'
-        />
-      )}
     </div>
   );
 };

@@ -52,13 +52,19 @@ const Graphs = ({ credits }: GraphsProps) => {
   return (
     <div className={styles.credits}>
       <p>Most Popular Credits</p>
+      <LineGraph
+        data={displayedData}
+        xAxisDataKey='name'
+        xAxisLabel='Credit Name'
+        allowClick
+      />
       <div className={styles.nav}>
         <button
           disabled={displayedData[0].id === credits[0].id}
           type='button'
           onClick={handlePrevClick}
         >
-          Previous {creditsToDisplay}
+          Previous
         </button>
         <button
           disabled={
@@ -68,15 +74,9 @@ const Graphs = ({ credits }: GraphsProps) => {
           type='button'
           onClick={handleNextClick}
         >
-          Next {creditsToDisplay}
+          Next
         </button>
       </div>
-      <LineGraph
-        data={displayedData}
-        xAxisDataKey='name'
-        xAxisLabel='Credit Name'
-        allowClick
-      />
     </div>
   );
 };

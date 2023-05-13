@@ -69,6 +69,13 @@ const Graphs = ({
   return (
     <div className={styles.collection}>
       <p>{collectionData?.name || 'Standalone Movie'}</p>
+      <LineGraph
+        data={displayedData || [movieData]}
+        xAxisDataKey='title'
+        xAxisLabel='Movie Title'
+        highlightDot={movieData}
+        allowClick={!!collectionData}
+      />
       {collectionData && collectionData.parts.length > moviesToDisplay && (
         <div className={styles.nav}>
           <button
@@ -79,7 +86,7 @@ const Graphs = ({
             type='button'
             onClick={handlePrevClick}
           >
-            Previous {moviesToDisplay}
+            Previous
           </button>
           <button
             disabled={
@@ -90,17 +97,10 @@ const Graphs = ({
             type='button'
             onClick={handleNextClick}
           >
-            Next {moviesToDisplay}
+            Next
           </button>
         </div>
       )}
-      <LineGraph
-        data={displayedData || [movieData]}
-        xAxisDataKey='title'
-        xAxisLabel='Movie Title'
-        highlightDot={movieData}
-        allowClick={!!collectionData}
-      />
     </div>
   );
 };
