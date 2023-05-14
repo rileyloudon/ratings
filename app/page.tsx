@@ -1,18 +1,51 @@
 import Search from '@/components/Search/Search';
+import {
+  ApiError,
+  SearchResultTv,
+  SearchResultMovie,
+  SearchResultPerson,
+} from '@/utils/types';
 import Popular from './Popular';
 import styles from './page.module.css';
 
-const App = () => {
+interface Results {
+  page: 1;
+  results: (SearchResultTv | SearchResultMovie | SearchResultPerson)[];
+  total_results: number;
+  total_pages: number;
+}
+
+type PopularResponse = Results | ApiError;
+
+const Page = async () => {
+  const API_KEY: string = process.env.API_KEY!;
+
+  let popularData;
+
+  try {
+    const popular = await fetch(
+      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
+    );
+    popularData = (await popular.json()) as PopularResponse;
+  } catch (err) {
+    popularData = err as Error;
+  }
+
+  if (popularData instanceof Error)
+    return <p className={styles.error}>{popularData.message}</p>;
+
+  if (popularData && 'status_message' in popularData)
+    return <p className={styles.error}>{popularData.status_message}</p>;
+
   return (
     <div className={styles.app}>
       <div className={styles.container}>
         <p className={styles.instructions}>Search for Movies or TV Shows</p>
         <Search />
-        {/* @ts-expect-error Async Server Component */}
-        <Popular />
+        <Popular popularData={popularData.results} />
       </div>
     </div>
   );
 };
 
-export default App;
+export default Page;
