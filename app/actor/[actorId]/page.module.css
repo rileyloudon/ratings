@@ -1,6 +1,7 @@
 .actor {
   margin: auto;
   max-width: 1000px;
+  padding-bottom: 50px;
 }
 
 .error {
