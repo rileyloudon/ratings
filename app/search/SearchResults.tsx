@@ -40,6 +40,7 @@ const SearchResults = ({
 
             return (
               <Link
+                prefetch={false}
                 href={`/${link}/${item.id}`}
                 key={item.id}
                 className={styles.item}

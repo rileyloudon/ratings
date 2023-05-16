@@ -11,7 +11,9 @@ const Header = () => {
   return (
     <header className={styles.container}>
       <h2 className={styles.title}>
-        <Link href='/'>Ratings</Link>
+        <Link prefetch={false} href='/'>
+          Ratings
+        </Link>
       </h2>
       {pathname !== '/' && <Search />}
     </header>

@@ -8,6 +8,7 @@ const CastCard = ({ cast }: { cast: Credit[] }) => (
     {cast.map((person) =>
       person.profile_path !== null ? (
         <Link
+          prefetch={false}
           href={`/actor/${person.id}`}
           key={person.id.toString() + person.character}
           className={styles.card}
