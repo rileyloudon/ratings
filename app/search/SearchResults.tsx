@@ -22,7 +22,9 @@ const SearchResults = ({
 }) => {
   const router = useRouter();
   const search = useSearchParams();
+
   const query = search.get('q');
+  const decodedQuery = query ? decodeURIComponent(query) : '';
   const page = Number(search.get('page')) || 1;
 
   const renderSearchResults = (): JSX.Element => {
@@ -64,14 +66,18 @@ const SearchResults = ({
           <button
             disabled={pageNumber === 1}
             type='button'
-            onClick={() => router.push(`/search?q=${query}&page=${page - 1}`)}
+            onClick={() =>
+              router.push(`/search?q=${decodedQuery}&page=${page - 1}`)
+            }
           >
             Previous Page
           </button>
           <button
             disabled={pageNumber === totalPages}
             type='button'
-            onClick={() => router.push(`/search?q=${query}&page=${page + 1}`)}
+            onClick={() =>
+              router.push(`/search?q=${decodedQuery}&page=${page + 1}`)
+            }
           >
             Next Page
           </button>

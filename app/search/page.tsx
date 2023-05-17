@@ -16,7 +16,7 @@ interface Results {
 
 type SearchResults = Results | ApiError;
 
-const GetSearchResults = async ({
+const Page = async ({
   searchParams,
 }: {
   searchParams: { q?: string; page?: number };
@@ -31,8 +31,9 @@ const GetSearchResults = async ({
   let error;
 
   try {
+    const decodedQuery = decodeURIComponent(q);
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${q}&page=${page}`
+      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${decodedQuery}&page=${page}`
     );
     searchData = (await response.json()) as SearchResults;
   } catch (e) {
@@ -58,4 +59,4 @@ const GetSearchResults = async ({
   );
 };
 
-export default GetSearchResults;
+export default Page;
