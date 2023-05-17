@@ -4,18 +4,10 @@ import { useRouter } from 'next/navigation';
 import { FocusEvent, FormEvent, useState } from 'react';
 import styles from './Search.module.css';
 
-interface SearchProps {
-  currentSearch?: string;
-  // updateCurrentSearch(value: string): void;
-}
-
-const Search = ({
-  currentSearch = '',
-}: // updateCurrentSearch
-SearchProps) => {
+const Search = () => {
   const router = useRouter();
 
-  const [searchString, setSearchString] = useState<string>(currentSearch);
+  const [searchString, setSearchString] = useState<string>('');
 
   const handleFocus = (e: FocusEvent<HTMLInputElement>): void =>
     e.target.select();
@@ -25,13 +17,10 @@ SearchProps) => {
     if (searchString.trim().length >= 1) {
       const input = document.querySelector('input');
       if (input) input.blur();
-      // turns any non-alphanumeric characters into spaces
-      const filteredSearchString = searchString.replace(/[\W_]+/g, ' ').trim();
 
-      // updateCurrentSearch(filteredSearchString);
-      router.push(`/search?q=${filteredSearchString}&page=1`);
-      if (filteredSearchString !== searchString)
-        setSearchString(filteredSearchString);
+      const encodedSearchString = encodeURIComponent(searchString.trim());
+
+      router.push(`/search?q=${encodedSearchString}&page=1`);
     }
   };
 
