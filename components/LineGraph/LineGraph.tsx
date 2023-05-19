@@ -16,7 +16,7 @@ import {
   SearchResultMovie,
   SearchResultTv,
 } from '../../utils/types';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styles from './LineGraph.module.css';
 
 interface LineGraphProps {
@@ -51,6 +51,7 @@ const LineGraph = ({
   highlightDot,
 }: LineGraphProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const tickFormatter = (value: string): string => {
     if (typeof value === 'string') {
@@ -72,7 +73,7 @@ const LineGraph = ({
           ? 'tvshow'
           : 'movie';
 
-      if (location.pathname !== `/${type}/${payload.id}`)
+      if (pathname !== `/${type}/${payload.id}`)
         router.push(`/${type}/${payload.id}`);
     }
   };
@@ -121,7 +122,7 @@ const LineGraph = ({
       <ResponsiveContainer width='100%' height={350}>
         <LineChart
           // Key makes sure animation works
-          key={location.pathname}
+          key={pathname}
           data={data}
           onClick={(e) => handleClick(e)}
           style={allowClick && { cursor: 'pointer' }}
@@ -147,12 +148,12 @@ const LineGraph = ({
             tickFormatter={tickFormatter}
             angle={xAxisLabel === 'Episode' ? 0 : 315}
           >
-            {/* <Label
+            <Label
               value={xAxisLabel}
               position='insideBottom'
               offset={-70}
               style={{ fill: 'var(--text)' }}
-            /> */}
+            />
           </XAxis>
           <YAxis
             tick={{ fill: 'var(--text)' }}
@@ -162,12 +163,12 @@ const LineGraph = ({
             allowDecimals={false}
             allowDataOverflow={false}
           >
-            {/* <Label
-            value='Rating'
-            position='insideLeft'
-            angle={-90}
-            style={{ fill: 'var(--text)' }}
-            /> */}
+            <Label
+              value='Rating'
+              position='insideLeft'
+              angle={-90}
+              style={{ fill: 'var(--text)' }}
+            />
           </YAxis>
           <Tooltip
             wrapperClassName={styles['tooltip-wrapper']}
