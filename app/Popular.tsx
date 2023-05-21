@@ -1,49 +1,87 @@
+'use client';
+
+import { useLayoutEffect, useRef } from 'react';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import {
-  ApiError,
-  SearchResultTv,
   SearchResultMovie,
   SearchResultPerson,
+  SearchResultTv,
 } from '@/utils/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Popular.module.css';
 
-interface Results {
-  page: 1;
-  results: (SearchResultTv | SearchResultMovie | SearchResultPerson)[];
-  total_results: number;
-  total_pages: number;
-}
+const Popular = ({
+  popularData,
+}: {
+  popularData: (SearchResultTv | SearchResultMovie | SearchResultPerson)[];
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-type PopularResponse = Results | ApiError;
+  const handleElementResize = () => {
+    if (ref.current) {
+      // 300px is poster width from api - use that as max width per poster
+      const postersToDisplay = Math.ceil(ref.current.clientWidth / 300);
 
-const Popular = async () => {
-  const API_KEY: string = process.env.API_KEY!;
+      ref.current.style.setProperty(
+        '--posters-displayed',
+        postersToDisplay.toString()
+      );
+    }
+  };
 
-  let popularData;
+  const resizeObserver =
+    typeof window !== 'undefined' && new ResizeObserver(handleElementResize);
 
-  try {
-    const popular = await fetch(
-      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
-    );
-    popularData = (await popular.json()) as PopularResponse;
-  } catch (err) {
-    popularData = err as Error;
-  }
+  useLayoutEffect(() => {
+    if (ref.current && resizeObserver) resizeObserver.observe(ref.current);
 
-  if (popularData instanceof Error)
-    return <p className={styles.error}>{popularData.message}</p>;
+    return () => {
+      if (resizeObserver) resizeObserver.disconnect();
+    };
+  });
 
-  if (popularData && 'status_message' in popularData)
-    return <p className={styles.error}>{popularData.status_message}</p>;
+  const handleScrollLeft = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (ref.current) {
+      const scrollIndex = Number(
+        getComputedStyle(ref.current).getPropertyValue('--scroll-index')
+      );
 
-  if ('results' in popularData) {
-    return (
+      ref.current.style.setProperty(
+        '--scroll-index',
+        (scrollIndex - 1).toString()
+      );
+
+      if (scrollIndex - 1 === 0) {
+        e.currentTarget.style.visibility = 'hidden';
+      }
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (ref.current) {
+      const scrollIndex = Number(
+        getComputedStyle(ref.current).getPropertyValue('--scroll-index')
+      );
+      ref.current.style.setProperty(
+        '--scroll-index',
+        (scrollIndex + 1).toString()
+      );
+
+      // Display left scroll button
+      // Hide right scroll button as needed
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <p>Popular This Week</p>
       <div className={styles.popular}>
-        <p>Popular This Week</p>
-        <div className={styles.posters}>
-          {popularData.results.map((item) => {
+        <button className={styles['nav-left']} onClick={handleScrollLeft}>
+          {'<'}
+        </button>
+        <div className={styles.posters} ref={ref}>
+          {popularData.map((item) => {
             const imgPath =
               item.media_type === 'person'
                 ? item.profile_path
@@ -56,6 +94,7 @@ const Popular = async () => {
 
             return (
               <Link
+                prefetch={false}
                 href={`/${link}/${item.id}`}
                 key={item.id}
                 className={styles.item}
@@ -74,10 +113,12 @@ const Popular = async () => {
             );
           })}
         </div>
+        <button className={styles['nav-right']} onClick={handleScrollRight}>
+          {'>'}
+        </button>
       </div>
-    );
-  }
-  return null;
+    </div>
+  );
 };
 
 export default Popular;
