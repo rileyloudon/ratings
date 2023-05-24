@@ -16,14 +16,18 @@ const Popular = ({
 }: {
   popularData: (SearchResultTv | SearchResultMovie | SearchResultPerson)[];
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const posterRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLButtonElement>(null);
+  const rightRef = useRef<HTMLButtonElement>(null);
+
+  let amountScrolled = 0;
 
   const handleElementResize = () => {
-    if (ref.current) {
+    if (posterRef.current) {
       // 300px is poster width from api - use that as max width per poster
-      const postersToDisplay = Math.ceil(ref.current.clientWidth / 300);
+      const postersToDisplay = Math.ceil(posterRef.current.clientWidth / 300);
 
-      ref.current.style.setProperty(
+      posterRef.current.style.setProperty(
         '--posters-displayed',
         postersToDisplay.toString()
       );
@@ -34,7 +38,8 @@ const Popular = ({
     typeof window !== 'undefined' && new ResizeObserver(handleElementResize);
 
   useLayoutEffect(() => {
-    if (ref.current && resizeObserver) resizeObserver.observe(ref.current);
+    if (posterRef.current && resizeObserver)
+      resizeObserver.observe(posterRef.current);
 
     return () => {
       if (resizeObserver) resizeObserver.disconnect();
@@ -42,34 +47,64 @@ const Popular = ({
   });
 
   const handleScrollLeft = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (ref.current) {
-      const scrollIndex = Number(
-        getComputedStyle(ref.current).getPropertyValue('--scroll-index')
-      );
+    if (posterRef.current && leftRef.current) {
+      const { clientWidth } = posterRef.current;
+      let scrollAmount = 1;
+      amountScrolled -= clientWidth;
 
-      ref.current.style.setProperty(
-        '--scroll-index',
-        (scrollIndex - 1).toString()
-      );
-
-      if (scrollIndex - 1 === 0) {
-        e.currentTarget.style.visibility = 'hidden';
+      if (amountScrolled - clientWidth < 0) {
+        scrollAmount = amountScrolled / clientWidth;
+        amountScrolled = 0;
       }
+
+      const scrollIndex = Number(
+        getComputedStyle(posterRef.current).getPropertyValue('--scroll-index')
+      );
+
+      posterRef.current.style.setProperty(
+        '--scroll-index',
+        (scrollIndex - scrollAmount).toString()
+      );
+
+      if (
+        rightRef.current &&
+        getComputedStyle(rightRef.current).getPropertyValue('visibility') ===
+          'hidden'
+      )
+        rightRef.current.style.visibility = 'visible';
+      if (amountScrolled === 0) leftRef.current.style.visibility = 'hidden';
     }
   };
 
   const handleScrollRight = () => {
-    if (ref.current) {
+    if (posterRef.current && rightRef.current) {
+      const { clientWidth, scrollWidth } = posterRef.current;
+      let scrollAmount = 1;
+
+      amountScrolled += clientWidth;
+
+      if (amountScrolled + clientWidth > scrollWidth) {
+        scrollAmount = (scrollWidth - amountScrolled) / clientWidth;
+        amountScrolled = scrollWidth;
+      }
+
       const scrollIndex = Number(
-        getComputedStyle(ref.current).getPropertyValue('--scroll-index')
-      );
-      ref.current.style.setProperty(
-        '--scroll-index',
-        (scrollIndex + 1).toString()
+        getComputedStyle(posterRef.current).getPropertyValue('--scroll-index')
       );
 
-      // Display left scroll button
-      // Hide right scroll button as needed
+      posterRef.current.style.setProperty(
+        '--scroll-index',
+        (scrollIndex + scrollAmount).toString()
+      );
+
+      if (
+        leftRef.current &&
+        getComputedStyle(leftRef.current).getPropertyValue('visibility') ===
+          'hidden'
+      )
+        leftRef.current.style.visibility = 'visible';
+      if (amountScrolled === scrollWidth)
+        rightRef.current.style.visibility = 'hidden';
     }
   };
 
@@ -77,10 +112,14 @@ const Popular = ({
     <div className={styles.container}>
       <p>Popular This Week</p>
       <div className={styles.popular}>
-        <button className={styles['nav-left']} onClick={handleScrollLeft}>
+        <button
+          ref={leftRef}
+          className={styles['nav-left']}
+          onClick={handleScrollLeft}
+        >
           {'<'}
         </button>
-        <div className={styles.posters} ref={ref}>
+        <div className={styles.posters} ref={posterRef}>
           {popularData.map((item) => {
             const imgPath =
               item.media_type === 'person'
@@ -113,7 +152,11 @@ const Popular = ({
             );
           })}
         </div>
-        <button className={styles['nav-right']} onClick={handleScrollRight}>
+        <button
+          ref={rightRef}
+          className={styles['nav-right']}
+          onClick={handleScrollRight}
+        >
           {'>'}
         </button>
       </div>
