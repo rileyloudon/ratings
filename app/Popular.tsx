@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import {
   SearchResultMovie,
@@ -20,7 +20,7 @@ const Popular = ({
   const leftRef = useRef<HTMLButtonElement>(null);
   const rightRef = useRef<HTMLButtonElement>(null);
 
-  let amountScrolled = 0;
+  const amountScrolled = useRef(0);
 
   const handleElementResize = () => {
     if (posterRef.current) {
@@ -31,6 +31,10 @@ const Popular = ({
         '--posters-displayed',
         postersToDisplay.toString()
       );
+
+      posterRef.current.style.setProperty('--scroll-index', '0');
+      amountScrolled.current = posterRef.current.clientWidth;
+      if (leftRef.current) leftRef.current.style.visibility = 'hidden';
     }
   };
 
@@ -46,16 +50,20 @@ const Popular = ({
     };
   });
 
-  const handleScrollLeft = (e: React.MouseEvent<HTMLButtonElement>) => {
+  useEffect(() => {
+    if (posterRef.current)
+      amountScrolled.current = posterRef.current.clientWidth;
+  }, []);
+
+  const handleScrollLeft = () => {
     if (posterRef.current && leftRef.current) {
       const { clientWidth } = posterRef.current;
       let scrollAmount = 1;
-      amountScrolled -= clientWidth;
 
-      if (amountScrolled - clientWidth < 0) {
-        scrollAmount = amountScrolled / clientWidth;
-        amountScrolled = 0;
-      }
+      if (amountScrolled.current - clientWidth < clientWidth) {
+        scrollAmount = (amountScrolled.current - clientWidth) / clientWidth;
+        amountScrolled.current = clientWidth;
+      } else amountScrolled.current -= clientWidth;
 
       const scrollIndex = Number(
         getComputedStyle(posterRef.current).getPropertyValue('--scroll-index')
@@ -72,7 +80,9 @@ const Popular = ({
           'hidden'
       )
         rightRef.current.style.visibility = 'visible';
-      if (amountScrolled === 0) leftRef.current.style.visibility = 'hidden';
+
+      if (amountScrolled.current <= clientWidth)
+        leftRef.current.style.visibility = 'hidden';
     }
   };
 
@@ -81,12 +91,10 @@ const Popular = ({
       const { clientWidth, scrollWidth } = posterRef.current;
       let scrollAmount = 1;
 
-      amountScrolled += clientWidth;
-
-      if (amountScrolled + clientWidth > scrollWidth) {
-        scrollAmount = (scrollWidth - amountScrolled) / clientWidth;
-        amountScrolled = scrollWidth;
-      }
+      if (amountScrolled.current + clientWidth > scrollWidth) {
+        scrollAmount = (scrollWidth - amountScrolled.current) / clientWidth;
+        amountScrolled.current = scrollWidth;
+      } else amountScrolled.current += clientWidth;
 
       const scrollIndex = Number(
         getComputedStyle(posterRef.current).getPropertyValue('--scroll-index')
@@ -103,7 +111,8 @@ const Popular = ({
           'hidden'
       )
         leftRef.current.style.visibility = 'visible';
-      if (amountScrolled === scrollWidth)
+
+      if (amountScrolled.current >= scrollWidth)
         rightRef.current.style.visibility = 'hidden';
     }
   };
