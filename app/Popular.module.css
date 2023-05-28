@@ -55,6 +55,7 @@
   color: var(--text);
   border: 1px solid var(--border);
   font-size: 24px;
+  padding: 0 12px;
 }
 
 .nav-left:hover,
