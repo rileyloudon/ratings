@@ -126,7 +126,7 @@ const Popular = ({
           className={styles['nav-left']}
           onClick={handleScrollLeft}
         >
-          {'<'}
+          <Image src='/left.svg' alt='<' width={48} height={48} />
         </button>
         <div className={styles.posters} ref={posterRef}>
           {popularData.map((item) => {
@@ -166,7 +166,7 @@ const Popular = ({
           className={styles['nav-right']}
           onClick={handleScrollRight}
         >
-          {'>'}
+          <Image src='/right.svg' alt='>' width={48} height={48} />
         </button>
       </div>
     </div>
