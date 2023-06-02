@@ -22,43 +22,41 @@ const Popular = ({
   return (
     <div className={styles.container}>
       <p>Popular This Week</p>
-      <div className={styles.popular}>
-        <HorizontalScoll containerRef={posterRef} maxWidthPerItem={300}>
-          <div className={styles.posters} ref={posterRef}>
-            {popularData.map((item) => {
-              const imgPath =
-                item.media_type === 'person'
-                  ? item.profile_path
-                  : item.poster_path;
-              const name = item.media_type === 'movie' ? item.title : item.name;
+      <HorizontalScoll containerRef={posterRef} maxWidthPerItem={300}>
+        <div className={styles.posters} ref={posterRef}>
+          {popularData.map((item) => {
+            const imgPath =
+              item.media_type === 'person'
+                ? item.profile_path
+                : item.poster_path;
+            const name = item.media_type === 'movie' ? item.title : item.name;
 
-              let link = 'movie';
-              if (item.media_type === 'tv') link = 'tvshow';
-              else if (item.media_type === 'person') link = 'actor';
+            let link = 'movie';
+            if (item.media_type === 'tv') link = 'tvshow';
+            else if (item.media_type === 'person') link = 'actor';
 
-              return (
-                <Link
-                  prefetch={false}
-                  href={`/${link}/${item.id}`}
-                  key={item.id}
-                  className={styles.item}
-                >
-                  {imgPath !== null ? (
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w300${imgPath}`}
-                      alt={`${name} Poster`}
-                      width={250}
-                      height={375}
-                    />
-                  ) : (
-                    <NoPoster />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-        </HorizontalScoll>
-      </div>
+            return (
+              <Link
+                prefetch={false}
+                href={`/${link}/${item.id}`}
+                key={item.id}
+                className={styles.item}
+              >
+                {imgPath !== null ? (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w300${imgPath}`}
+                    alt={`${name} Poster`}
+                    width={250}
+                    height={375}
+                  />
+                ) : (
+                  <NoPoster />
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      </HorizontalScoll>
     </div>
   );
 };

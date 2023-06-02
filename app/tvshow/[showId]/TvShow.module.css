@@ -4,7 +4,6 @@
   justify-content: center;
   padding-top: 8px;
   padding-bottom: 16px;
-  box-sizing: border-box;
 }
 
 .top {
@@ -16,7 +15,6 @@
 }
 
 .backdrop-container {
-  flex-direction: 'row';
   width: 100%;
 }
 
