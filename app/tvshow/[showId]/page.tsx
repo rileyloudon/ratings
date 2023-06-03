@@ -30,20 +30,22 @@ const Page = async ({ params }: { params: { showId: string } }) => {
     return <p className={styles.error}>{tvData.status_message}</p>;
 
   if (tvData && 'seasons' in tvData) {
-    // Filter unreleased seasons
-    const now = Date.now();
-    const filteredSeasons = tvData.seasons.filter(
-      (a) =>
-        a.air_date !== null &&
-        new Date(a.air_date).getTime() < now &&
-        a.season_number > 0
-    );
+    // Filter unreleased seasons unless its the only one
+    if (tvData.seasons.length > 1) {
+      const now = Date.now();
+      const filteredSeasons = tvData.seasons.filter(
+        (a) =>
+          a.air_date !== null &&
+          new Date(a.air_date).getTime() < now &&
+          a.season_number > 0
+      );
 
-    tvData = {
-      ...tvData,
-      seasons: filteredSeasons,
-      number_of_seasons: filteredSeasons.length,
-    };
+      tvData = {
+        ...tvData,
+        seasons: filteredSeasons,
+        number_of_seasons: filteredSeasons.length,
+      };
+    }
 
     // Get all released seasons
     // append_to_response has a limit of 20 sub requests
@@ -94,7 +96,9 @@ const Page = async ({ params }: { params: { showId: string } }) => {
     tvData && (
       <div className={styles.tv}>
         <TvShow tvData={tvData} />
-        {<Graphs tvData={tvData} seasonData={allSeasons} />}
+        {allSeasons['season/1'] && (
+          <Graphs tvData={tvData} seasonData={allSeasons} />
+        )}
       </div>
     )
   );
