@@ -19,6 +19,11 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
     return 'Unavailable to Stream';
   };
 
+  const renderSeasonCount = (seasons: number | false) => {
+    if (seasons === 0) return 'Unreleased';
+    else return `${seasons} ${seasons === 1 ? 'Season' : 'Seasons'}`;
+  };
+
   const renderTvShow = (): JSX.Element => {
     const yearStart = tvData.first_air_date.slice(0, 4);
     const seasons = 'number_of_seasons' in tvData && tvData.number_of_seasons;
@@ -69,9 +74,7 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
                 ? tvData.genres.map((item, i) => `${i ? ', ' : ''}${item.name}`)
                 : 'Unknown'}{' '}
             </span>
-            <span>
-              {seasons} {seasons === 1 ? 'Season' : 'Seasons'}{' '}
-            </span>
+            <span>{renderSeasonCount(seasons)} </span>
             <span>{renderWatchProviders()}</span>
           </div>
           {'credits' in tvData && tvData.credits.cast.length && (
