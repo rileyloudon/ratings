@@ -38,12 +38,10 @@ const Page = async () => {
     return <p className={styles.error}>{popularData.status_message}</p>;
 
   return (
-    <div className={styles.app}>
-      <div className={styles.container}>
-        <p className={styles.instructions}>Search for Movies or TV Shows</p>
-        <Search />
-        <Popular popularData={popularData.results} />
-      </div>
+    <div className={styles.container}>
+      <p className={styles.instructions}>Search for Movies or TV Shows</p>
+      <Search />
+      <Popular popularData={popularData.results} />
     </div>
   );
 };
