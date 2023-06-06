@@ -1,0 +1,36 @@
+.scroll-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scroll-container a {
+  flex: 0 0 calc(100% / var(--posters-displayed));
+}
+
+.nav-left,
+.nav-right {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.nav-left:hover,
+.nav-right:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.nav-left {
+  visibility: hidden;
+  left: 0;
+  margin-right: 5px;
+}
+
+.nav-right {
+  right: 0;
+  margin-left: 5px;
+}
