@@ -85,14 +85,6 @@
   color: var(--blue);
 }
 
-.loading {
-  text-align: center;
-}
-
-.loading p {
-  color: var(--text);
-}
-
 @media (max-width: 735px) {
   .header {
     flex-direction: column;
