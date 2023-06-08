@@ -8,3 +8,8 @@
   font-size: 18px;
   margin-top: 0;
 }
+
+.error {
+  color: var(--text);
+  text-align: center;
+}
