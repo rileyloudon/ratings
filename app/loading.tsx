@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './loading.module.css';
 
-const loading = () => {
+const Loading = () => {
   return (
     <Image
       className={styles.spinner}
@@ -13,4 +13,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default Loading;
