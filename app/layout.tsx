@@ -15,9 +15,6 @@ export const metadata = {
       },
     ],
   },
-  icons: {
-    icon: '/favicon.svg',
-  },
 };
 
 const lato = Lato({ weight: '400', subsets: ['latin'] });
