@@ -24,7 +24,8 @@ const Page = async () => {
 
   try {
     const popular = await fetch(
-      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
+      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`,
+      { next: { revalidate: 86400 } }
     );
     popularData = (await popular.json()) as PopularResponse;
   } catch (err) {
