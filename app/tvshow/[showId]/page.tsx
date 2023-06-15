@@ -18,7 +18,8 @@ const Page = async ({ params }: { params: { showId: string } }) => {
 
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`
+      `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
+      { next: { revalidate: 86400 * 7 } }
     );
     tvData = (await response.json()) as TvData;
   } catch (err) {
@@ -65,7 +66,8 @@ const Page = async ({ params }: { params: { showId: string } }) => {
       for (let i = 0; i < appendStringArray.length; i += 1) {
         promises.push(
           fetch(
-            `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&append_to_response=${appendStringArray[i]}`
+            `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&append_to_response=${appendStringArray[i]}`,
+            { next: { revalidate: 86400 * 7 } }
           )
         );
       }
