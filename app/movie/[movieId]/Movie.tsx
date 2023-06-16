@@ -1,24 +1,11 @@
 import { DetailedMovie } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
+import WatchProvider from '@/components/WatchProvider/WatchProvider';
 import Image from 'next/image';
 import styles from './Movie.module.css';
 
 const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
-  const renderWatchProviders = (): string => {
-    if (movieData && 'watch/providers' in movieData) {
-      const countryCode = Intl.DateTimeFormat()
-        .resolvedOptions()
-        .locale.slice(-2);
-
-      const watchProviders = movieData['watch/providers'].results[countryCode];
-      if (watchProviders?.flatrate)
-        return `Stream on ${watchProviders.flatrate[0].provider_name}`;
-    }
-
-    return 'Unavailable to Stream';
-  };
-
   const renderMovie = (): JSX.Element => {
     const yearReleased = movieData.release_date.slice(0, 4);
     const hours =
@@ -78,7 +65,7 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
                 : 'Unknown'}{' '}
             </span>
             <span>{time} </span>
-            <span>{renderWatchProviders()}</span>
+            <WatchProvider watchData={movieData['watch/providers']} />
           </div>
           {'credits' in movieData && movieData.credits.cast.length && (
             <CastCard cast={movieData.credits.cast} />

@@ -1,24 +1,11 @@
 import { DetailedTv } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
+import WatchProvider from '@/components/WatchProvider/WatchProvider';
 import Image from 'next/image';
 import styles from './TvShow.module.css';
 
 const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
-  const renderWatchProviders = (): string => {
-    const countryCode = Intl.DateTimeFormat()
-      .resolvedOptions()
-      .locale.slice(-2);
-
-    if (tvData && 'watch/providers' in tvData) {
-      const watchProviders = tvData['watch/providers'].results[countryCode];
-      if (watchProviders?.flatrate)
-        return `Stream on ${watchProviders.flatrate[0].provider_name}`;
-    }
-
-    return 'Unavailable to Stream';
-  };
-
   const renderSeasonCount = (seasons: number | false) => {
     if (seasons === 0) return 'Unreleased';
     else return `${seasons} ${seasons === 1 ? 'Season' : 'Seasons'}`;
@@ -75,7 +62,7 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
                 : 'Unknown'}{' '}
             </span>
             <span>{renderSeasonCount(seasons)} </span>
-            <span>{renderWatchProviders()}</span>
+            <WatchProvider watchData={tvData['watch/providers']} />
           </div>
           {'credits' in tvData && tvData.credits.cast.length && (
             <CastCard cast={tvData.credits.cast} />
