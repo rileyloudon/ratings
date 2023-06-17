@@ -58,14 +58,17 @@ const HorizontalScoll = ({
     if (containerRef.current) {
       amountScrolled.current = containerRef.current.clientWidth;
 
-      containerRef.current.style.setProperty('--posters-displayed', '0');
+      containerRef.current.style.setProperty(
+        '--posters-displayed',
+        Math.ceil(containerRef.current.clientWidth / maxWidthPerItem).toString()
+      );
 
       containerRef.current.style.setProperty('--scroll-index', '0');
       containerRef.current.style.transform =
         'translateX(calc(var(--scroll-index) * -100%))';
       containerRef.current.style.transition = 'transform 500ms ease-in-out';
     }
-  }, [containerRef]);
+  }, [containerRef, maxWidthPerItem]);
 
   const handleScrollLeft = () => {
     if (containerRef.current && leftRef.current) {
