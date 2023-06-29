@@ -21,6 +21,7 @@ const HorizontalScoll = ({
   const rightRef = useRef<HTMLButtonElement>(null);
 
   const amountScrolled = useRef(0);
+  const prevWidth = useRef<number>();
 
   const handleElementResize = () => {
     if (containerRef.current) {
@@ -33,8 +34,11 @@ const HorizontalScoll = ({
         postersToDisplay.toString()
       );
 
-      containerRef.current.style.setProperty('--scroll-index', '0');
-      amountScrolled.current = clientWidth;
+      if (clientWidth !== prevWidth.current) {
+        prevWidth.current = clientWidth;
+        containerRef.current.style.setProperty('--scroll-index', '0');
+        amountScrolled.current = clientWidth;
+      }
       if (leftRef.current) leftRef.current.style.visibility = 'hidden';
       if (rightRef.current)
         rightRef.current.style.visibility =
@@ -56,14 +60,6 @@ const HorizontalScoll = ({
 
   useEffect(() => {
     if (containerRef.current) {
-      amountScrolled.current = containerRef.current.clientWidth;
-
-      containerRef.current.style.setProperty(
-        '--posters-displayed',
-        Math.ceil(containerRef.current.clientWidth / maxWidthPerItem).toString()
-      );
-
-      containerRef.current.style.setProperty('--scroll-index', '0');
       containerRef.current.style.transform =
         'translateX(calc(var(--scroll-index) * -100%))';
       containerRef.current.style.transition = 'transform 500ms ease-in-out';
