@@ -38,8 +38,8 @@ const HorizontalScoll = ({
         prevWidth.current = clientWidth;
         containerRef.current.style.setProperty('--scroll-index', '0');
         amountScrolled.current = clientWidth;
+        if (leftRef.current) leftRef.current.style.visibility = 'hidden';
       }
-      if (leftRef.current) leftRef.current.style.visibility = 'hidden';
       if (rightRef.current)
         rightRef.current.style.visibility =
           clientWidth < scrollWidth ? 'visible' : 'hidden';
