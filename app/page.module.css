@@ -1,6 +1,6 @@
 .container {
   text-align: center;
-  height: calc(100vh - 151px);
+  min-height: calc(100vh - 151px);
 }
 
 .instructions {
