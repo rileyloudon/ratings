@@ -35,3 +35,9 @@
   font-size: 14px;
   color: #a7a7a7;
 }
+
+@media (max-width: 735px) {
+  .castCards {
+    max-width: calc(100% - 74px);
+  }
+}

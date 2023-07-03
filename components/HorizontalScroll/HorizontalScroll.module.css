@@ -12,11 +12,11 @@
 
 .nav-left,
 .nav-right {
+  padding: 0;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--text);
   border: 1px solid var(--border);
-  font-size: 24px;
   cursor: pointer;
 }
 
@@ -35,4 +35,12 @@
   visibility: hidden;
   right: 0;
   margin-left: 5px;
+}
+
+@media (max-width: 735px) {
+  .nav-left img,
+  .nav-right img {
+    width: 30px;
+    height: 30px;
+  }
 }
