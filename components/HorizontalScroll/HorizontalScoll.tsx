@@ -27,7 +27,10 @@ const HorizontalScoll = ({
     if (containerRef.current) {
       const { clientWidth, scrollWidth } = containerRef.current;
 
-      const postersToDisplay = Math.ceil(clientWidth / maxWidthPerItem);
+      const postersToDisplay =
+        Math.ceil(clientWidth / maxWidthPerItem) > 2
+          ? Math.ceil(clientWidth / maxWidthPerItem)
+          : 2;
 
       containerRef.current.style.setProperty(
         '--posters-displayed',
