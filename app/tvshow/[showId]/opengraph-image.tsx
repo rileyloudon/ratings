@@ -40,7 +40,7 @@ export default async function Image({
         <p
           style={{
             position: 'absolute',
-            fontSize: 48,
+            fontSize: 72,
             color: 'white',
             top: '50%',
             left: '50%',
