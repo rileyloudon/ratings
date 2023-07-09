@@ -16,7 +16,8 @@ export default async function Image({
   const API_KEY: string = process.env.API_KEY!;
 
   const show = await fetch(
-    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`
+    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
+    { next: { revalidate: 86400 * 7 } }
   ).then((res) => res.json());
 
   return new ImageResponse(
