@@ -15,9 +15,15 @@ export default async function Image({
   const API_KEY: string = process.env.API_KEY!;
 
   const show = (await fetch(
-    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
+    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US`,
     { next: { revalidate: 86400 * 7 } }
   ).then((res) => res.json())) as TvData;
+
+  const dimensions = (data: TvData): { width: number; height: number } => {
+    if ('poster_path' in data && data.poster_path && !data.backdrop_path)
+      return { width: 500, height: 750 };
+    return { width: 1280, height: 720 };
+  };
 
   const background = (data: TvData) => {
     if ('backdrop_path' in data && data.backdrop_path)
@@ -84,14 +90,7 @@ export default async function Image({
       </div>
     ),
     {
-      width:
-        'poster_path' in show && show.poster_path && !show.backdrop_path
-          ? 500
-          : 1280,
-      height:
-        'poster_path' in show && show.poster_path && !show.backdrop_path
-          ? 750
-          : 720,
+      ...dimensions(show),
     }
   );
 }
