@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { DetailedTv, Season, ApiError } from '@/utils/types';
 import Graphs from './Graphs';
 import TvShow from './TvShow';
@@ -5,6 +6,30 @@ import styles from './page.module.css';
 
 type TvData = DetailedTv | ApiError;
 type SeasonData = Season | ApiError;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { showId: string };
+}): Promise<Metadata> {
+  const API_KEY: string = process.env.API_KEY!;
+
+  const tvData = (await fetch(
+    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
+    { next: { revalidate: 86400 * 7 } }
+  ).then((res) => res.json())) as TvData;
+
+  if ('name' in tvData)
+    return {
+      title: `${tvData.name} - Ratings`,
+      openGraph: {
+        title: `${tvData.name} - Ratings`,
+        description: `View a rating graph for ${tvData.name}.`,
+      },
+    };
+
+  return {};
+}
 
 const Page = async ({ params }: { params: { showId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
@@ -17,11 +42,10 @@ const Page = async ({ params }: { params: { showId: string } }) => {
   let error;
 
   try {
-    const response = await fetch(
+    tvData = (await fetch(
       `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
       { next: { revalidate: 86400 * 7 } }
-    );
-    tvData = (await response.json()) as TvData;
+    ).then((res) => res.json())) as TvData;
   } catch (err) {
     error = err as Error;
   }
