@@ -1,9 +1,34 @@
+import { Metadata } from 'next';
 import { ApiError, DetailedPerson } from '@/utils/types';
 import Actor from './Actor';
 import Graphs from './Graphs';
 import styles from './page.module.css';
 
 type ActorData = DetailedPerson | ApiError;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { actorId: string };
+}): Promise<Metadata> {
+  const API_KEY: string = process.env.API_KEY!;
+
+  const actorData = (await fetch(
+    `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`,
+    { next: { revalidate: 86400 * 7 } }
+  ).then((res) => res.json())) as ActorData;
+
+  if ('name' in actorData)
+    return {
+      title: `${actorData.name}`,
+      openGraph: {
+        title: `${actorData.name}`,
+        description: `View a rating graph for ${actorData.name}.`,
+      },
+    };
+
+  return {};
+}
 
 const Page = async ({ params }: { params: { actorId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
@@ -14,11 +39,10 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
   let error;
 
   try {
-    const response = await fetch(
+    actorData = (await fetch(
       `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`,
       { next: { revalidate: 86400 * 7 } }
-    );
-    actorData = (await response.json()) as ActorData;
+    ).then((res) => res.json())) as ActorData;
   } catch (err) {
     error = err as Error;
   }

@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
   DetailedMovie,
   ApiError,
@@ -11,6 +12,30 @@ import styles from './page.module.css';
 type MovieData = DetailedMovie | ApiError;
 type CollectionData = Collection | ApiError;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { movieId: string };
+}): Promise<Metadata> {
+  const API_KEY: string = process.env.API_KEY!;
+
+  const movieData = (await fetch(
+    `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
+    { next: { revalidate: 86400 * 7 } }
+  ).then((res) => res.json())) as MovieData;
+
+  if ('title' in movieData)
+    return {
+      title: `${movieData.title}`,
+      openGraph: {
+        title: `${movieData.title}`,
+        description: `View a rating graph for ${movieData.title}.`,
+      },
+    };
+
+  return {};
+}
+
 const Page = async ({ params }: { params: { movieId: string } }) => {
   const API_KEY: string = process.env.API_KEY!;
 
@@ -21,11 +46,10 @@ const Page = async ({ params }: { params: { movieId: string } }) => {
   let error;
 
   try {
-    const response = await fetch(
+    movieData = (await fetch(
       `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
       { next: { revalidate: 86400 * 7 } }
-    );
-    movieData = (await response.json()) as MovieData;
+    ).then((res) => res.json())) as MovieData;
 
     if (
       'belongs_to_collection' in movieData &&

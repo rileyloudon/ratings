@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import {
   ApiError,
   SearchResultMovie,
@@ -15,6 +16,15 @@ interface Results {
 }
 
 type SearchResults = Results | ApiError;
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: `Search`,
+    openGraph: {
+      title: `Search`,
+    },
+  };
+}
 
 const Page = async ({
   searchParams,
