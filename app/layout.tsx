@@ -4,16 +4,12 @@ import { Lato } from 'next/font/google';
 import './global.css';
 
 export const metadata = {
-  title: 'Ratings',
+  title: { template: '%s - Ratings', default: 'Ratings' },
   description: 'View TMDB Rating Graphs',
   themeColor: '#161616',
   openGraph: {
-    title: 'Ratings',
-    images: [
-      {
-        url: '/og-image.png',
-      },
-    ],
+    title: { template: '%s - Ratings', default: 'Ratings' },
+    description: 'View TMDB Rating Graphs',
   },
 };
 
