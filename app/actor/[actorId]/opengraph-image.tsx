@@ -15,7 +15,7 @@ export default async function Image({
   const API_KEY: string = process.env.API_KEY!;
 
   const actor = (await fetch(
-    `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US`,
+    `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`,
     { next: { revalidate: 86400 * 7 } }
   ).then((res) => res.json())) as ActorData;
 
