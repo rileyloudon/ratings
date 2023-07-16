@@ -21,9 +21,9 @@ export async function generateMetadata({
 
   if ('name' in tvData)
     return {
-      title: `${tvData.name} - Ratings`,
+      title: `${tvData.name}`,
       openGraph: {
-        title: `${tvData.name} - Ratings`,
+        title: `${tvData.name}`,
         description: `View a rating graph for ${tvData.name}.`,
       },
     };
