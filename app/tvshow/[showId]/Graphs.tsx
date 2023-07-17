@@ -129,4 +129,5 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
     </div>
   );
 };
+
 export default Graphs;

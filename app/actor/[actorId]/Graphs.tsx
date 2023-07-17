@@ -80,4 +80,5 @@ const Graphs = ({ credits }: GraphsProps) => {
     </div>
   );
 };
+
 export default Graphs;

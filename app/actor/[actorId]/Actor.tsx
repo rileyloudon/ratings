@@ -33,50 +33,46 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
     return <span>{Math.abs(date.getUTCFullYear() - 1970)} Years Old</span>;
   };
 
-  const renderActor = (): JSX.Element => {
-    return (
-      <div className={styles.header}>
-        {actorData.profile_path !== null ? (
-          <Image
-            className={styles.poster}
-            src={`https://image.tmdb.org/t/p/w500/${actorData.profile_path}`}
-            alt=''
-            width={300}
-            height={450}
-          />
-        ) : (
-          <NoPoster />
-        )}
-        {'biography' in actorData && (
-          <div
-            ref={ref}
-            className={`${styles.text} ${
-              textHeight >= 450 && !showMoreBio
-                ? styles['hidden-bio']
-                : styles['long-bio']
-            }`}
-          >
-            <h2 className={styles.name}>{actorData.name}</h2>
-            <div className={styles.info}>
-              {getAge(actorData.birthday)}
-              <span>
-                {actorData.combined_credits.cast.length} Credit
-                {actorData.combined_credits.cast.length === 1 ? '' : 's'}
-              </span>
-            </div>
-            <p className={styles.bio}>{actorData.biography}</p>
+  return (
+    <div className={styles.header}>
+      {actorData.profile_path ? (
+        <Image
+          className={styles.poster}
+          src={`https://image.tmdb.org/t/p/w500/${actorData.profile_path}`}
+          alt=''
+          width={300}
+          height={450}
+        />
+      ) : (
+        <NoPoster />
+      )}
+      {'biography' in actorData && (
+        <div
+          ref={ref}
+          className={`${styles.text} ${
+            textHeight >= 450 && !showMoreBio
+              ? styles['hidden-bio']
+              : styles['long-bio']
+          }`}
+        >
+          <h2 className={styles.name}>{actorData.name}</h2>
+          <div className={styles.info}>
+            {getAge(actorData.birthday)}
+            <span>
+              {actorData.combined_credits.cast.length} Credit
+              {actorData.combined_credits.cast.length === 1 ? '' : 's'}
+            </span>
           </div>
-        )}
-        {textHeight >= 450 && (
-          <button type='button' onClick={() => setShowMoreBio(!showMoreBio)}>
-            {showMoreBio ? 'Read Less' : 'Read More'}
-          </button>
-        )}
-      </div>
-    );
-  };
-
-  return renderActor();
+          <p className={styles.bio}>{actorData.biography}</p>
+        </div>
+      )}
+      {textHeight >= 450 && (
+        <button type='button' onClick={() => setShowMoreBio(!showMoreBio)}>
+          {showMoreBio ? 'Read Less' : 'Read More'}
+        </button>
+      )}
+    </div>
+  );
 };
 
 export default Actor;
