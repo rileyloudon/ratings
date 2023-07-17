@@ -42,11 +42,10 @@ const Page = async ({
 
   try {
     const decodedQuery = decodeURIComponent(q);
-    const response = await fetch(
+    searchData = (await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${decodedQuery}&page=${page}`,
       { next: { revalidate: 86400 } }
-    );
-    searchData = (await response.json()) as SearchResults;
+    ).then((res) => res.json())) as SearchResults;
   } catch (e) {
     error = e as Error;
   }
