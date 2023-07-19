@@ -4,7 +4,7 @@
 
 .episodes select {
   border: 1px solid var(--border);
-  background-color: transparent;
+  background-color: var(--background);
   color: var(--text);
   font-size: 16px;
   padding: 6px 28px 6px 12px;
