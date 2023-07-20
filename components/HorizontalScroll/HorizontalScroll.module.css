@@ -25,6 +25,13 @@
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+.nav-left:focus-visible,
+.nav-right:focus-visible {
+  background-color: rgba(0, 0, 0, 0.75);
+  outline: none;
+  border: 1px solid #9ecaed;
+}
+
 .nav-left {
   visibility: hidden;
   left: 0;
