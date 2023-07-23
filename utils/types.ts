@@ -102,7 +102,8 @@ export interface DetailedMovie extends Movie {
   } | null;
   runtime: number;
 
-  // from append_to_response=watch/providers
+  // from append_to_response
+
   'watch/providers': {
     results: {
       [countryCode: string]: {
@@ -112,9 +113,17 @@ export interface DetailedMovie extends Movie {
     };
   };
 
-  // from append_to_response=credits
   credits: {
     cast: Credit[];
+  };
+
+  release_dates: {
+    results: [
+      {
+        iso_3166_1: string;
+        release_dates: [type: number];
+      }
+    ];
   };
 }
 
