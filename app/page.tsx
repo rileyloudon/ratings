@@ -23,11 +23,10 @@ const Page = async () => {
   let popularData;
 
   try {
-    const popular = await fetch(
+    popularData = (await fetch(
       `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`,
       { next: { revalidate: 86400 } }
-    );
-    popularData = (await popular.json()) as PopularResponse;
+    ).then((res) => res.json())) as PopularResponse;
   } catch (err) {
     popularData = err as Error;
   }
