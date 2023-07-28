@@ -8,29 +8,32 @@ import Image from 'next/image';
 import styles from './CastCard.module.css';
 
 const CastCard = ({ cast }: { cast: Credit[] }) => {
+  // On windows, pressing tab cycles through all images breaking the horizontal scroll buttons
+
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
     <HorizontalScoll containerRef={cardRef} maxWidthPerItem={185}>
-      <div className={styles.castCards} ref={cardRef}>
-        {cast.map((person) =>
-          person.profile_path !== null ? (
-            <Link
-              prefetch={false}
-              href={`/actor/${person.id}`}
-              key={person.id.toString() + person.character}
-              className={styles.card}
-            >
-              <Image
-                src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                alt={`${person.name} Poster`}
-                width={185}
-                height={277}
-              />
-              <p className={styles.name}>{person.name}</p>
-              <p className={styles.character}>{person.character}</p>
-            </Link>
-          ) : null
+      <div className={styles.castCards} ref={cardRef} tabIndex={-1}>
+        {cast.map(
+          (person) =>
+            person.profile_path && (
+              <Link
+                prefetch={false}
+                href={`/actor/${person.id}`}
+                key={person.id.toString() + person.character}
+                className={styles.card}
+              >
+                <Image
+                  src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
+                  alt={`${person.name} Poster`}
+                  width={185}
+                  height={277}
+                />
+                <p className={styles.name}>{person.name}</p>
+                <p className={styles.character}>{person.character}</p>
+              </Link>
+            )
         )}
       </div>
     </HorizontalScoll>
