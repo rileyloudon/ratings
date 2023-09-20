@@ -116,15 +116,6 @@ export interface DetailedMovie extends Movie {
   credits: {
     cast: Credit[];
   };
-
-  release_dates: {
-    results: [
-      {
-        iso_3166_1: string;
-        release_dates: [type: number];
-      }
-    ];
-  };
 }
 
 export interface Collection {
