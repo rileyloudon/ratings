@@ -8,13 +8,11 @@ import Image from 'next/image';
 import styles from './CastCard.module.css';
 
 const CastCard = ({ cast }: { cast: Credit[] }) => {
-  // On windows, pressing tab cycles through all images breaking the horizontal scroll buttons
-
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
     <HorizontalScoll containerRef={cardRef} maxWidthPerItem={185}>
-      <div className={styles.castCards} ref={cardRef} tabIndex={-1}>
+      <div className={styles.castCards} ref={cardRef}>
         {cast.map(
           (person) =>
             person.profile_path && (
@@ -23,6 +21,7 @@ const CastCard = ({ cast }: { cast: Credit[] }) => {
                 href={`/actor/${person.id}`}
                 key={person.id.toString() + person.character}
                 className={styles.card}
+                tabIndex={-1}
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
