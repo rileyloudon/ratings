@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   const movieData = (await fetch(
     `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-    { next: { revalidate: 86400 * 7 } }
+    { next: { revalidate: 86400 } }
   ).then((res) => res.json())) as MovieData;
 
   if ('title' in movieData)

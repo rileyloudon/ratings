@@ -41,7 +41,7 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
   try {
     actorData = (await fetch(
       `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`,
-      { next: { revalidate: 86400 * 7 } }
+      { next: { revalidate: 86400 } }
     ).then((res) => res.json())) as ActorData;
   } catch (err) {
     error = err as Error;

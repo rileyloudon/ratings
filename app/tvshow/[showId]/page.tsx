@@ -16,7 +16,7 @@ export async function generateMetadata({
 
   const tvData = (await fetch(
     `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-    { next: { revalidate: 86400 * 7 } }
+    { next: { revalidate: 86400 } }
   ).then((res) => res.json())) as TvData;
 
   if ('name' in tvData)
@@ -44,7 +44,7 @@ const Page = async ({ params }: { params: { showId: string } }) => {
   try {
     tvData = (await fetch(
       `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-      { next: { revalidate: 86400 * 7 } }
+      { next: { revalidate: 86400 } }
     ).then((res) => res.json())) as TvData;
   } catch (err) {
     error = err as Error;
