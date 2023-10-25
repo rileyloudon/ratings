@@ -16,8 +16,9 @@
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: none;
   cursor: pointer;
+  visibility: hidden;
 }
 
 .nav-left:hover,
@@ -33,14 +34,10 @@
 }
 
 .nav-left {
-  visibility: hidden;
-  left: 0;
   margin-right: 5px;
 }
 
 .nav-right {
-  visibility: hidden;
-  right: 0;
   margin-left: 5px;
 }
 
