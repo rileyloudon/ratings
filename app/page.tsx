@@ -17,6 +17,8 @@ interface Results {
 
 type PopularResponse = Results | ApiError;
 
+export const revalidate = 43200;
+
 const Page = async () => {
   const API_KEY: string = process.env.API_KEY!;
 
@@ -24,8 +26,7 @@ const Page = async () => {
 
   try {
     popularData = (await fetch(
-      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`,
-      { next: { revalidate: 43200 } }
+      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`
     ).then((res) => res.json())) as PopularResponse;
   } catch (err) {
     popularData = err as Error;
