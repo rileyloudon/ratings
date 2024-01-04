@@ -4,6 +4,7 @@ import { Lato } from 'next/font/google';
 import './global.css';
 
 export const metadata = {
+  metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: { template: '%s - Ratings', default: 'Ratings' },
   description: 'View TMDB Rating Graphs',
   themeColor: '#161616',
