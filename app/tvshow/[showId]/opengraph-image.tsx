@@ -1,5 +1,5 @@
 import { DetailedTv, ApiError } from '@/utils/types';
-import { ImageResponse } from 'next/server';
+import { ImageResponse } from 'next/og';
 
 type TvData = DetailedTv | ApiError;
 

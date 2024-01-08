@@ -1,5 +1,5 @@
 import { DetailedPerson, ApiError } from '@/utils/types';
-import { ImageResponse } from 'next/server';
+import { ImageResponse } from 'next/og';
 
 type ActorData = DetailedPerson | ApiError;
 
