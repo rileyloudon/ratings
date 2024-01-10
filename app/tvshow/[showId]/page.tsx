@@ -15,8 +15,7 @@ export async function generateMetadata({
   const API_KEY: string = process.env.API_KEY!;
 
   const tvData = (await fetch(
-    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-    { next: { revalidate: 86400 } }
+    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`
   ).then((res) => res.json())) as TvData;
 
   if ('name' in tvData)
@@ -86,12 +85,13 @@ const Page = async ({ params }: { params: { showId: string } }) => {
     }
 
     try {
+      // Get data for each season
       const promises = [];
       for (let i = 0; i < appendStringArray.length; i += 1) {
         promises.push(
           fetch(
             `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&append_to_response=${appendStringArray[i]}`,
-            { next: { revalidate: 86400 * 7 } }
+            { next: { revalidate: 86400 } }
           )
         );
       }
