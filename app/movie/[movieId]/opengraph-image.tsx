@@ -16,7 +16,7 @@ export default async function Image({
 
   const movie = (await fetch(
     `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-    { next: { revalidate: 86400 * 7 } }
+    { next: { revalidate: 3600 } }
   ).then((res) => res.json())) as MovieData;
 
   const dimensions = (data: MovieData): { width: number; height: number } => {

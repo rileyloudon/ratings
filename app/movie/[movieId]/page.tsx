@@ -47,7 +47,7 @@ const Page = async ({ params }: { params: { movieId: string } }) => {
   try {
     movieData = (await fetch(
       `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-      { next: { revalidate: 86400 } }
+      { next: { revalidate: 3600 } }
     ).then((res) => res.json())) as MovieData;
 
     if (
@@ -56,7 +56,7 @@ const Page = async ({ params }: { params: { movieId: string } }) => {
     ) {
       const collectionResponse = await fetch(
         `https://api.themoviedb.org/3/collection/${movieData.belongs_to_collection?.id}?api_key=${API_KEY}&language=en-US`,
-        { next: { revalidate: 606900 } }
+        { next: { revalidate: 3600 } }
       );
       const tempCollection =
         (await collectionResponse.json()) as CollectionData;
