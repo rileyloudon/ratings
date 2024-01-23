@@ -56,8 +56,6 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
   };
 
   const handleNextClick = () => {
-    console.log(displayedData);
-
     if (seasonData && !('status_message' in seasonData) && displayedData) {
       const { episodes } = seasonData[seasonSelector];
 
@@ -81,15 +79,25 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
     (x, i) => `Season ${i + 1}`
   );
 
-  return (
-    <div className={styles.episodes}>
-      <select name='season' id='season' onChange={handleChange}>
+  const renderSeasonDropdown = () => {
+    if (seasonOptions.length === 1) {
+      return <p className={styles.season}>Season 1</p>;
+    }
+
+    return (
+      <select name='seasonDropdown' id='seasonDropdown' onChange={handleChange}>
         {seasonOptions.map((seasonNumber, i) => (
           <option key={seasonNumber} value={`season/${i + 1}`}>
             {seasonNumber}
           </option>
         ))}
       </select>
+    );
+  };
+
+  return (
+    <div className={styles.episodes}>
+      {renderSeasonDropdown()}
       {displayedData && (
         <LineGraph
           data={displayedData}
