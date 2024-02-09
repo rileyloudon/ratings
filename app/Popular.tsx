@@ -41,6 +41,7 @@ const Popular = ({
                 href={`/${link}/${item.id}`}
                 key={item.id}
                 className={styles.item}
+                tabIndex={-1}
               >
                 {imgPath !== null ? (
                   <Image
