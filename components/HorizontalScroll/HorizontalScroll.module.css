@@ -19,6 +19,7 @@
   border: none;
   cursor: pointer;
   visibility: hidden;
+  border: 1px solid transparent;
 }
 
 .nav-left:hover,
@@ -34,11 +35,11 @@
 }
 
 .nav-left {
-  margin-right: 5px;
+  margin-right: 4px;
 }
 
 .nav-right {
-  margin-left: 5px;
+  margin-left: 4px;
 }
 
 @media (max-width: 735px) {

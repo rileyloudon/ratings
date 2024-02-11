@@ -43,9 +43,20 @@ const HorizontalScoll = ({
         amountScrolled.current = clientWidth;
         if (leftRef.current) leftRef.current.style.visibility = 'hidden';
       }
-      if (rightRef.current)
+
+      if (rightRef.current) {
+        const btnMargin = window
+          .getComputedStyle(rightRef.current)
+          .getPropertyValue('margin-left')
+          .charAt(0);
+
+        containerRef.current.style.maxWidth = `calc(100% - ${
+          (rightRef.current.offsetWidth + Number(btnMargin)) * 2
+        }px)`;
+
         rightRef.current.style.visibility =
-          clientWidth < scrollWidth ? 'visible' : 'hidden';
+          amountScrolled.current >= scrollWidth ? 'hidden' : 'visible';
+      }
     }
   };
 
