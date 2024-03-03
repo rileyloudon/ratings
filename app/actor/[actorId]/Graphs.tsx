@@ -51,7 +51,7 @@ const Graphs = ({ credits }: GraphsProps) => {
 
   return (
     <div className={styles.credits}>
-      <p>Most Popular Credits</p>
+      <p>Recent Releases</p>
       <LineGraph
         data={displayedData}
         xAxisDataKey='name'

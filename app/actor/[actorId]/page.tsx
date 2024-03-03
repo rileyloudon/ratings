@@ -58,8 +58,15 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
       .map((credit) => ({
         ...credit,
         name: 'name' in credit ? credit.name : credit.title,
+        first_air_date:
+          'first_air_date' in credit
+            ? credit.first_air_date
+            : credit.release_date,
       }))
-      .sort((a, b) => b.popularity - a.popularity);
+      .filter(
+        (a) => new Date(a.first_air_date).getTime() < Date.now() + 2628000000
+      )
+      .sort((a, b) => b.first_air_date.localeCompare(a.first_air_date));
 
     actorData = {
       ...actorData,
