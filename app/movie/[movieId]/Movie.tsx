@@ -44,13 +44,17 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
             />
             <h2 className={styles.title}>
               {movieData.title}
-              <span className={styles.released}> ({yearReleased})</span>
+              {yearReleased && (
+                <span className={styles.released}> ({yearReleased})</span>
+              )}
             </h2>
           </div>
         ) : (
           <h2 className={styles.title}>
             {movieData.title}
-            <span className={styles.released}> ({yearReleased})</span>
+            {yearReleased && (
+              <span className={styles.released}> ({yearReleased})</span>
+            )}
           </h2>
         )}
         <div className={styles.info}>

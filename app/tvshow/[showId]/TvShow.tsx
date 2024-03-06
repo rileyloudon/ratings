@@ -44,13 +44,17 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
             />
             <h2 className={styles.title}>
               {tvData.name}
-              <span className={styles.released}> ({yearStart})</span>
+              {yearStart && (
+                <span className={styles.released}> ({yearStart})</span>
+              )}
             </h2>
           </div>
         ) : (
           <h2 className={styles.title}>
             {tvData.name}
-            <span className={styles.released}> ({yearStart})</span>
+            {yearStart && (
+              <span className={styles.released}> ({yearStart})</span>
+            )}
           </h2>
         )}
         <div className={styles.info}>
