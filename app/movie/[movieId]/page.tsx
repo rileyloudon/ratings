@@ -64,8 +64,8 @@ const Page = async ({ params }: { params: { movieId: string } }) => {
         // filtered date is 3 months from now. today + months * milliseconds
         const filterDate = Date.now() + 3 * 2628000000;
         const sortedParts: MovieType[] = tempCollection.parts
-          .sort((a, b) => a.release_date.localeCompare(b.release_date))
-          .filter((a) => new Date(a.release_date).getTime() < filterDate);
+          .filter((a) => new Date(a.release_date).getTime() < filterDate)
+          .sort((a, b) => a.release_date.localeCompare(b.release_date));
         collectionData = { ...tempCollection, parts: sortedParts };
       } else collectionData = tempCollection;
     }
