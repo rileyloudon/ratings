@@ -39,7 +39,9 @@ const Page = async () => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.instructions}>Search for Movies or TV Shows</p>
+      <p className={styles.instructions}>
+        Search for Movies, TV Shows, or People
+      </p>
       <Search />
       <Popular popularData={popularData.results} />
     </div>
