@@ -26,7 +26,7 @@ Built with NextJS and Typescript.
 ![Home Page Example](https://github.com/rileyloudon/ratings/assets/40878107/dd1e80d2-a942-4363-8e67-26d875fb023f)
 
 **Cast and Rating Graph**
-![Cast and Rating Graph Example](https://github.com/rileyloudon/ratings/assets/40878107/30619b9a-1346-42d8-a6db-04a7d1ed7b36)
+![Cast and Rating Graph Example](https://github.com/rileyloudon/ratings/assets/40878107/649d59e6-81e8-4ee2-a69e-e5542b190767)
 
 ## Acknowledgements
 
