@@ -2,7 +2,7 @@
 
 <br>
 
-Ratings is a website to view rating graphs for movies, tv shows and actors/actresses.
+Ratings is a website to view rating graphs for movies, tv shows and people.
 
 Built with NextJS and Typescript.
 
@@ -12,12 +12,13 @@ Built with NextJS and Typescript.
 
 ## Features
 
-- View this weeks popular movies/tv shows
-- View cast of selected movie/tv show
-- Show streaming availability in your country
-- Movie graphs include all movies in a collection
-- Tv graphs show each season
-- Actor/Actress graphs include all credits sorted by most popular
+- Uses [The Movie Database](https://www.themoviedb.org) API to display data about movies, tv shows, and people
+- View this weeks popular movies and tv shows
+- View cast of selected movie or tv show
+- View streaming availability in your country
+- Movie graphs include all movies in a series
+- Tv graphs are seperated into each season
+- People graphs include all credits sorted by most recent
 
 ## Screenshots
 
