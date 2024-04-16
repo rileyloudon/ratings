@@ -51,10 +51,9 @@
 }
 
 .title,
-.info,
-.overview {
-  color: var(--text);
+.container {
   margin: 0 16px;
+  color: var(--text);
 }
 
 .overview {
@@ -89,6 +88,7 @@
 
   .title {
     margin-top: 8px;
+    font-size: 18px;
   }
 
   .info {

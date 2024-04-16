@@ -57,21 +57,23 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
             )}
           </h2>
         )}
-        <div className={styles.info}>
-          <span className={styles.genres}>
-            {'genres' in movieData && movieData.genres.length
-              ? movieData.genres?.map(
-                  (item, i) => `${i ? ', ' : ''}${item.name}`
-                )
-              : 'Unknown'}{' '}
-          </span>
-          <span>{time} </span>
-          <WatchProvider watchData={movieData['watch/providers']} />
+        <div className={styles.container}>
+          <div className={styles.info}>
+            <span className={styles.genres}>
+              {'genres' in movieData && movieData.genres.length
+                ? movieData.genres?.map(
+                    (item, i) => `${i ? ', ' : ''}${item.name}`
+                  )
+                : 'Unknown'}{' '}
+            </span>
+            <span>{time} </span>
+            <WatchProvider watchData={movieData['watch/providers']} />
+          </div>
+          {'credits' in movieData && movieData.credits.cast.length && (
+            <CastCard cast={movieData.credits.cast} />
+          )}
+          <p className={styles.overview}>{movieData.overview}</p>
         </div>
-        {'credits' in movieData && movieData.credits.cast.length && (
-          <CastCard cast={movieData.credits.cast} />
-        )}
-        <p className={styles.overview}>{movieData.overview}</p>
       </div>
     </div>
   );

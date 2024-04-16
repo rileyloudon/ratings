@@ -57,19 +57,21 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
             )}
           </h2>
         )}
-        <div className={styles.info}>
-          <span className={styles.genres}>
-            {'genres' in tvData && tvData.genres.length
-              ? tvData.genres.map((item, i) => `${i ? ', ' : ''}${item.name}`)
-              : 'Unknown'}{' '}
-          </span>
-          <span>{renderSeasonCount(seasons)} </span>
-          <WatchProvider watchData={tvData['watch/providers']} />
+        <div className={styles.container}>
+          <div className={styles.info}>
+            <span className={styles.genres}>
+              {'genres' in tvData && tvData.genres.length
+                ? tvData.genres.map((item, i) => `${i ? ', ' : ''}${item.name}`)
+                : 'Unknown'}{' '}
+            </span>
+            <span>{renderSeasonCount(seasons)} </span>
+            <WatchProvider watchData={tvData['watch/providers']} />
+          </div>
+          {'credits' in tvData && tvData.credits.cast.length && (
+            <CastCard cast={tvData.credits.cast} />
+          )}
+          <p className={styles.overview}>{tvData.overview}</p>
         </div>
-        {'credits' in tvData && tvData.credits.cast.length && (
-          <CastCard cast={tvData.credits.cast} />
-        )}
-        <p className={styles.overview}>{tvData.overview}</p>
       </div>
     </div>
   );
