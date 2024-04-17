@@ -69,7 +69,7 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
             <span>{time} </span>
             <WatchProvider watchData={movieData['watch/providers']} />
           </div>
-          {'credits' in movieData && movieData.credits.cast.length && (
+          {'credits' in movieData && movieData.credits.cast.length > 0 && (
             <CastCard cast={movieData.credits.cast} />
           )}
           <p className={styles.overview}>{movieData.overview}</p>

@@ -14,6 +14,8 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
     else return `${seasons} ${seasons === 1 ? 'Season' : 'Seasons'}`;
   };
 
+  console.log(tvData.credits.cast);
+
   return (
     <div className={styles.header}>
       {!tvData.backdrop_path && tvData.poster_path && (
@@ -67,7 +69,7 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
             <span>{renderSeasonCount(seasons)} </span>
             <WatchProvider watchData={tvData['watch/providers']} />
           </div>
-          {'credits' in tvData && tvData.credits.cast.length && (
+          {'credits' in tvData && tvData.credits.cast.length > 0 && (
             <CastCard cast={tvData.credits.cast} />
           )}
           <p className={styles.overview}>{tvData.overview}</p>
