@@ -14,7 +14,7 @@ const Footer = () => (
         target='_blank'
         rel='noreferrer'
       >
-        <Image fill src='/tmdb.svg' alt='TMDB Logo' sizes='100vw' />
+        <Image fill src='/tmdb.svg' alt='TMDB Logo' sizes='100vw' priority />
       </a>
       and
       <a
@@ -23,7 +23,13 @@ const Footer = () => (
         target='_blank'
         rel='noreferrer'
       >
-        <Image fill src='/just-watch.svg' alt='JustWatch Logo' sizes='100vw' />
+        <Image
+          fill
+          src='/just-watch.svg'
+          alt='JustWatch Logo'
+          sizes='100vw'
+          priority
+        />
       </a>
     </p>
   </footer>
