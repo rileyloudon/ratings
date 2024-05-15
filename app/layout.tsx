@@ -18,7 +18,7 @@ export const viewport: Viewport = {
   themeColor: '#161616',
 };
 
-const lato = Lato({ weight: '400', subsets: ['latin'] });
+const lato = Lato({ weight: '400', subsets: ['latin'], preload: false });
 
 export default function RootLayout({
   children,
