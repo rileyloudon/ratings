@@ -25,7 +25,7 @@ const CastCard = ({ cast }: { cast: Credit[] }) => {
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
-                  alt={`${person.name} Poster`}
+                  alt={`Headshot of ${person.name}`}
                   width={185}
                   height={277}
                 />
