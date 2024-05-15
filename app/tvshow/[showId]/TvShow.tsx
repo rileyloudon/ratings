@@ -14,17 +14,16 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
     else return `${seasons} ${seasons === 1 ? 'Season' : 'Seasons'}`;
   };
 
-  console.log(tvData.credits.cast);
-
   return (
     <div className={styles.header}>
       {!tvData.backdrop_path && tvData.poster_path && (
         <Image
           className={styles.poster}
           src={`https://image.tmdb.org/t/p/w500/${tvData.poster_path}`}
-          alt=''
+          alt={`${tvData.name} Poster`}
           width={300}
           height={450}
+          priority
         />
       )}
       {!tvData.backdrop_path && !tvData.poster_path && <NoPoster />}
@@ -40,9 +39,10 @@ const TvShow = ({ tvData }: { tvData: DetailedTv }) => {
             <Image
               className={styles.backdrop}
               src={`https://image.tmdb.org/t/p/w1280${tvData.backdrop_path}`}
-              alt=''
+              alt={`${tvData.name} Backdrop`}
               width={1280}
               height={720}
+              priority
             />
             <h2 className={styles.title}>
               {tvData.name}

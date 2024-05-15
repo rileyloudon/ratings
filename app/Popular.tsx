@@ -49,6 +49,7 @@ const Popular = ({
                     alt={`${name} Poster`}
                     width={250}
                     height={375}
+                    priority
                   />
                 ) : (
                   <NoPoster />

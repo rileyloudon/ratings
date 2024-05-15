@@ -39,9 +39,10 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
         <Image
           className={styles.poster}
           src={`https://image.tmdb.org/t/p/w500/${actorData.profile_path}`}
-          alt=''
+          alt={`Headshot of ${actorData.name}`}
           width={300}
           height={450}
+          priority
         />
       ) : (
         <NoPoster />

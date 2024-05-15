@@ -20,9 +20,10 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
         <Image
           className={styles.poster}
           src={`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`}
-          alt=''
+          alt={`${movieData.title} Poster`}
           width={300}
           height={450}
+          priority
         />
       )}
       {!movieData.backdrop_path && !movieData.poster_path && <NoPoster />}
@@ -38,9 +39,10 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
             <Image
               className={styles.backdrop}
               src={`https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}`}
-              alt=''
+              alt={`${movieData.title} Backdrop`}
               width={1280}
               height={720}
+              priority
             />
             <h2 className={styles.title}>
               {movieData.title}
