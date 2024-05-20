@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { DetailedMovie } from '@/utils/types';
 import NoPoster from '@/components/NoPoster/NoPoster';
 import CastCard from '@/components/CastCard/CastCard';
@@ -6,6 +7,9 @@ import Image from 'next/image';
 import styles from './Movie.module.css';
 
 const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
+  const headersList = headers();
+  const watchCountryCode = headersList.get('x-vercel-ip-country');
+
   const yearReleased = movieData.release_date.slice(0, 4);
   const hours = 'runtime' in movieData ? Math.trunc(movieData.runtime / 60) : 0;
   const minutes = 'runtime' in movieData ? movieData.runtime % 60 : 0;
@@ -69,7 +73,10 @@ const Movie = ({ movieData }: { movieData: DetailedMovie }) => {
                 : 'Unknown'}{' '}
             </span>
             <span>{time} </span>
-            <WatchProvider watchData={movieData['watch/providers']} />
+            <WatchProvider
+              watchData={movieData['watch/providers']}
+              watchCountryCode={watchCountryCode}
+            />
           </div>
           {'credits' in movieData && movieData.credits.cast.length > 0 && (
             <CastCard cast={movieData.credits.cast} />

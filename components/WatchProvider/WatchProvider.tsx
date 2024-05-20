@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 const WatchProvider = ({
   watchData,
+  watchCountryCode,
 }: {
   watchData: {
     results: {
@@ -13,13 +14,16 @@ const WatchProvider = ({
       };
     };
   };
+  watchCountryCode: string | null;
 }) => {
-  const [countryCode, setCountryCode] = useState<string>();
+  const [countryCode, setCountryCode] = useState<string | null>(
+    watchCountryCode
+  );
 
   useEffect(() => {
-    if (typeof window !== 'undefined')
+    if (countryCode === null && typeof window !== 'undefined')
       setCountryCode(Intl.DateTimeFormat().resolvedOptions().locale.slice(-2));
-  }, []);
+  }, [countryCode]);
 
   if (countryCode) {
     const watchProviders = watchData.results[countryCode];
