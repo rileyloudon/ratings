@@ -24,40 +24,42 @@ const HorizontalScoll = ({
   const prevWidth = useRef<number>();
 
   const handleElementResize = () => {
-    if (containerRef.current) {
-      const { clientWidth, scrollWidth } = containerRef.current;
+    setTimeout(() => {
+      if (containerRef.current) {
+        const { clientWidth, scrollWidth } = containerRef.current;
 
-      const postersToDisplay =
-        Math.ceil(clientWidth / maxWidthPerItem) > 2
-          ? Math.ceil(clientWidth / maxWidthPerItem)
-          : 2;
+        const postersToDisplay =
+          Math.ceil(clientWidth / maxWidthPerItem) > 2
+            ? Math.ceil(clientWidth / maxWidthPerItem)
+            : 2;
 
-      containerRef.current.style.setProperty(
-        '--posters-displayed',
-        postersToDisplay.toString()
-      );
+        containerRef.current.style.setProperty(
+          '--posters-displayed',
+          postersToDisplay.toString()
+        );
 
-      if (clientWidth !== prevWidth.current) {
-        prevWidth.current = clientWidth;
-        containerRef.current.style.setProperty('--scroll-index', '0');
-        amountScrolled.current = clientWidth;
-        if (leftRef.current) leftRef.current.style.visibility = 'hidden';
+        if (clientWidth !== prevWidth.current) {
+          prevWidth.current = clientWidth;
+          containerRef.current.style.setProperty('--scroll-index', '0');
+          amountScrolled.current = clientWidth;
+          if (leftRef.current) leftRef.current.style.visibility = 'hidden';
+        }
+
+        if (rightRef.current) {
+          const btnMargin = window
+            .getComputedStyle(rightRef.current)
+            .getPropertyValue('margin-left')
+            .charAt(0);
+
+          containerRef.current.style.maxWidth = `calc(100% - ${
+            (rightRef.current.offsetWidth + Number(btnMargin)) * 2
+          }px)`;
+
+          rightRef.current.style.visibility =
+            amountScrolled.current >= scrollWidth ? 'hidden' : 'visible';
+        }
       }
-
-      if (rightRef.current) {
-        const btnMargin = window
-          .getComputedStyle(rightRef.current)
-          .getPropertyValue('margin-left')
-          .charAt(0);
-
-        containerRef.current.style.maxWidth = `calc(100% - ${
-          (rightRef.current.offsetWidth + Number(btnMargin)) * 2
-        }px)`;
-
-        rightRef.current.style.visibility =
-          amountScrolled.current >= scrollWidth ? 'hidden' : 'visible';
-      }
-    }
+    }, 0);
   };
 
   const resizeObserver =
