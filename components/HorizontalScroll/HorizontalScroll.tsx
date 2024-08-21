@@ -8,7 +8,7 @@ import {
 import Image from 'next/image';
 import styles from './HorizontalScroll.module.css';
 
-const HorizontalScoll = ({
+const HorizontalScroll = ({
   children,
   containerRef,
   maxWidthPerItem,
@@ -24,6 +24,7 @@ const HorizontalScoll = ({
   const prevWidth = useRef<number>();
 
   const handleElementResize = () => {
+    // setTimeout fixes safari resize observer error
     setTimeout(() => {
       if (containerRef.current) {
         const { clientWidth, scrollWidth } = containerRef.current;
@@ -66,20 +67,17 @@ const HorizontalScoll = ({
     typeof window !== 'undefined' && new ResizeObserver(handleElementResize);
 
   useLayoutEffect(() => {
-    if (containerRef.current && resizeObserver)
-      resizeObserver.observe(containerRef.current);
-
-    return () => {
-      if (resizeObserver) resizeObserver.disconnect();
-    };
-  });
-
-  useEffect(() => {
     if (containerRef.current) {
       containerRef.current.style.transform =
         'translateX(calc(var(--scroll-index) * -100%))';
       containerRef.current.style.transition = 'transform 500ms ease-in-out';
+
+      if (resizeObserver) resizeObserver.observe(containerRef.current);
     }
+
+    return () => {
+      if (resizeObserver) resizeObserver.disconnect();
+    };
   }, [containerRef, maxWidthPerItem]);
 
   const handleScrollLeft = () => {
@@ -169,4 +167,4 @@ const HorizontalScoll = ({
   );
 };
 
-export default HorizontalScoll;
+export default HorizontalScroll;
