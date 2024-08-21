@@ -1,6 +1,6 @@
 'use client';
 
-import HorizontalScoll from '../HorizontalScroll/HorizontalScoll';
+import HorizontalScoll from '../HorizontalScroll/HorizontalScroll';
 import Link from 'next/link';
 import { Credit } from '../../utils/types';
 import { useRef } from 'react';

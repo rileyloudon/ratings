@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import NoPoster from '@/components/NoPoster/NoPoster';
-import HorizontalScoll from '@/components/HorizontalScroll/HorizontalScoll';
+import HorizontalScoll from '@/components/HorizontalScroll/HorizontalScroll';
 import {
   SearchResultMovie,
   SearchResultPerson,
