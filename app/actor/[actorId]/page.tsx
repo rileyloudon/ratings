@@ -6,6 +6,11 @@ import styles from './page.module.css';
 
 type ActorData = DetailedPerson | ApiError;
 
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url, { next: { revalidate: 3600 } });
+  return response.json() as T;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -13,9 +18,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const API_KEY: string = process.env.API_KEY!;
 
-  const actorData = (await fetch(
-    `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`
-  ).then((res) => res.json())) as ActorData;
+  const actorUrl = `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`;
+  const actorData = await fetchData<ActorData>(actorUrl);
 
   if ('name' in actorData)
     return {
@@ -34,14 +38,12 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
 
   if (!params.actorId) return <p className={styles.error}>No Actor Id Found</p>;
 
-  let actorData;
-  let error;
+  let actorData: ActorData | undefined;
+  let error: Error | undefined;
 
   try {
-    actorData = (await fetch(
-      `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`,
-      { next: { revalidate: 3600 } }
-    ).then((res) => res.json())) as ActorData;
+    const actorUrl = `https://api.themoviedb.org/3/person/${params.actorId}?api_key=${API_KEY}&language=en-US&append_to_response=combined_credits`;
+    actorData = await fetchData<ActorData>(actorUrl);
   } catch (err) {
     error = err as Error;
   }
@@ -51,6 +53,7 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
   if (actorData && 'status_message' in actorData)
     return <p className={styles.error}>{actorData.status_message}</p>;
 
+  // Filter duplicates and credits not yet released, Edit movie to use same keys as tv
   if (actorData) {
     const ids = actorData.combined_credits.cast.map((credit) => credit.id);
     const creditsByPopularity = actorData.combined_credits.cast
@@ -64,7 +67,8 @@ const Page = async ({ params }: { params: { actorId: string } }) => {
             : credit.release_date,
       }))
       .filter(
-        (a) => new Date(a.first_air_date).getTime() < Date.now() + 2628000000
+        (credit) =>
+          new Date(credit.first_air_date).getTime() < Date.now() + 2628000000
       )
       .sort((a, b) => b.first_air_date.localeCompare(a.first_air_date));
 

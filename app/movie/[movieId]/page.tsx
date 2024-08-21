@@ -12,6 +12,11 @@ import styles from './page.module.css';
 type MovieData = DetailedMovie | ApiError;
 type CollectionData = Collection | ApiError;
 
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url, { next: { revalidate: 3600 } });
+  return response.json() as T;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -19,9 +24,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const API_KEY: string = process.env.API_KEY!;
 
-  const movieData = (await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`
-  ).then((res) => res.json())) as MovieData;
+  const movieUrl = `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`;
+  const movieData = await fetchData<MovieData>(movieUrl);
 
   if ('title' in movieData)
     return {
@@ -40,26 +44,21 @@ const Page = async ({ params }: { params: { movieId: string } }) => {
 
   if (!params.movieId) return <p className={styles.error}>No Movie Id Found</p>;
 
-  let movieData;
-  let collectionData;
-  let error;
+  let movieData: MovieData | undefined;
+  let collectionData: CollectionData | undefined;
+  let error: Error | undefined;
 
   try {
-    movieData = (await fetch(
-      `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-      { next: { revalidate: 3600 } }
-    ).then((res) => res.json())) as MovieData;
+    const movieUrl = `https://api.themoviedb.org/3/movie/${params.movieId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`;
+    movieData = await fetchData<MovieData>(movieUrl);
 
     if (
       'belongs_to_collection' in movieData &&
       movieData.belongs_to_collection !== null
     ) {
-      const collectionResponse = await fetch(
-        `https://api.themoviedb.org/3/collection/${movieData.belongs_to_collection?.id}?api_key=${API_KEY}&language=en-US`,
-        { next: { revalidate: 3600 } }
-      );
-      const tempCollection =
-        (await collectionResponse.json()) as CollectionData;
+      const collectionUrl = `https://api.themoviedb.org/3/collection/${movieData.belongs_to_collection?.id}?api_key=${API_KEY}&language=en-US`;
+      const tempCollection = await fetchData<CollectionData>(collectionUrl);
+
       if ('parts' in tempCollection) {
         // filtered date is 3 months from now. today + months * milliseconds
         const filterDate = Date.now() + 3 * 2628000000;

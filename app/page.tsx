@@ -17,16 +17,19 @@ interface Results {
 
 type PopularResponse = Results | ApiError;
 
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url, { next: { revalidate: 3600 } });
+  return response.json() as T;
+}
+
 const Page = async () => {
   const API_KEY: string = process.env.API_KEY!;
 
-  let popularData;
+  let popularData: PopularResponse | Error;
 
   try {
-    popularData = (await fetch(
-      `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`,
-      { next: { revalidate: 3600 } }
-    ).then((res) => res.json())) as PopularResponse;
+    const popularUrl = `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`;
+    popularData = await fetchData<PopularResponse>(popularUrl);
   } catch (err) {
     popularData = err as Error;
   }

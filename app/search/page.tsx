@@ -17,6 +17,11 @@ interface Results {
 
 type SearchResults = Results | ApiError;
 
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url, { next: { revalidate: 3600 } });
+  return response.json() as T;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: `Search`,
@@ -37,15 +42,15 @@ const Page = async ({
   if (!q) return <p className={styles.error}>No Search String Found.</p>;
   if (!page) return <p className={styles.error}>No Page Number Found</p>;
 
-  let searchData;
-  let error;
+  let searchData: SearchResults | undefined;
+  let error: Error | undefined;
 
   try {
     const decodedQuery = decodeURIComponent(q);
-    searchData = (await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${decodedQuery}&page=${page}`,
-      { next: { revalidate: 3600 } }
-    ).then((res) => res.json())) as SearchResults;
+
+    const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${decodedQuery}&page=${page}`;
+
+    searchData = await fetchData<SearchResults>(searchUrl);
   } catch (e) {
     error = e as Error;
   }

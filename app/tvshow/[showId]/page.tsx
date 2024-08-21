@@ -7,6 +7,11 @@ import styles from './page.module.css';
 type TvData = DetailedTv | ApiError;
 type SeasonData = Season | ApiError;
 
+async function fetchData<T>(url: string): Promise<T> {
+  const response = await fetch(url, { next: { revalidate: 3600 } });
+  return response.json() as T;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -14,9 +19,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const API_KEY: string = process.env.API_KEY!;
 
-  const tvData = (await fetch(
-    `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`
-  ).then((res) => res.json())) as TvData;
+  const tvUrl = `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`;
+
+  const tvData = await fetchData<TvData>(tvUrl);
 
   if ('name' in tvData)
     return {
@@ -36,15 +41,13 @@ const Page = async ({ params }: { params: { showId: string } }) => {
   if (!params.showId)
     return <p className={styles.error}>No Tv Show Id Found</p>;
 
-  let tvData;
+  let tvData: TvData | undefined;
   let allSeasons: Season = {};
-  let error;
+  let error: Error | undefined;
 
   try {
-    tvData = (await fetch(
-      `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`,
-      { next: { revalidate: 3600 } }
-    ).then((res) => res.json())) as TvData;
+    const tvUrl = `https://api.themoviedb.org/3/tv/${params.showId}?api_key=${API_KEY}&language=en-US&append_to_response=watch/providers,credits`;
+    tvData = await fetchData<TvData>(tvUrl);
   } catch (err) {
     error = err as Error;
   }
