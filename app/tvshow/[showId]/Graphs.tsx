@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { DetailedTv, Episode, Season } from '@/utils/types';
 import LineGraph from '@/components/LineGraph/LineGraph';
 import styles from './Graphs.module.css';
@@ -11,11 +12,25 @@ interface GraphsProps {
 }
 
 const Graphs = ({ tvData, seasonData }: GraphsProps) => {
+  const router = useRouter();
+
   const [episodesToDisplay] = useState<number>(10);
   const [seasonSelector, setSeasonSelector] = useState<string>('season/1');
   const [displayedData, setDisplayedData] = useState<Episode[]>();
+  const ref = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
+    const hashSeason = Number(location.hash.replace('#season=', ''));
+
+    const defaultSeason =
+      hashSeason > 0 && hashSeason <= tvData.number_of_seasons
+        ? `season/${hashSeason}`
+        : 'season/1';
+
+    setSeasonSelector(defaultSeason);
+
+    if (ref.current !== null) ref.current.value = defaultSeason;
+
     window.innerWidth < 400 &&
     tvData.number_of_episodes / tvData.number_of_seasons > 100
       ? 5
@@ -33,8 +48,13 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
       );
   }, [seasonData, seasonSelector, episodesToDisplay]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSeasonSelector(e.target.value);
+
+    router.replace(`#season=${e.target.value.replace('season/', '')}`, {
+      scroll: false,
+    });
+  };
 
   const handlePrevClick = () => {
     if (seasonData && !('status_message' in seasonData) && displayedData) {
@@ -83,9 +103,13 @@ const Graphs = ({ tvData, seasonData }: GraphsProps) => {
     if (seasonOptions.length === 1) {
       return <p className={styles.season}>Season 1</p>;
     }
-
     return (
-      <select name='seasonDropdown' id='seasonDropdown' onChange={handleChange}>
+      <select
+        name='seasonDropdown'
+        id='seasonDropdown'
+        onChange={handleChange}
+        ref={ref}
+      >
         {seasonOptions.map((seasonNumber, i) => (
           <option key={seasonNumber} value={`season/${i + 1}`}>
             {seasonNumber}
