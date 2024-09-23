@@ -143,6 +143,7 @@ export interface SearchResultPerson extends Person {
 
 export interface DetailedPerson extends Person {
   birthday: string;
+  deathday: string | null;
   biography: string;
   combined_credits: {
     cast: (Movie | TvShow)[];
