@@ -27,8 +27,9 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
     };
   });
 
-  const getAge = (actorBirthday: string) => {
-    const ageDiff = Date.now() - new Date(actorBirthday).getTime();
+  const getAge = (actorBirthday: string, actorDeath: string | null) => {
+    const endDate = actorDeath ? new Date(actorDeath).getTime() : Date.now();
+    const ageDiff = endDate - new Date(actorBirthday).getTime();
     const date = new Date(ageDiff);
     return <span>{Math.abs(date.getUTCFullYear() - 1970)} Years Old</span>;
   };
@@ -58,7 +59,7 @@ const Actor = ({ actorData }: { actorData: DetailedPerson }) => {
         >
           <h2 className={styles.name}>{actorData.name}</h2>
           <div className={styles.info}>
-            {getAge(actorData.birthday)}
+            {getAge(actorData.birthday, actorData.deathday)}
             <span>
               {actorData.combined_credits.cast.length} Credit
               {actorData.combined_credits.cast.length === 1 ? '' : 's'}
